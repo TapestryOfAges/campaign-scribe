@@ -1,0 +1,71 @@
+table.inittable { 
+	margin: 15px 0px 0px 15px; 
+}
+
+.headrow { background-color:white}
+
+td.rowinit_enemy { padding: 0px 3px 0px 3px;
+	                 background-color: #ee0000;
+	               }
+
+td.rowinit_neutral { padding: 0px 3px 0px 3px;
+	                 background-color: #ffffff;
+	               }
+
+td.rowinit_friendly { padding: 0px 3px 0px 3px;
+	                 background-color: #3399ff;
+	               }
+
+td.rowname_enemy { padding: 0px 3px 0px 3px;
+	                 background-color: #ee0000;
+	               }
+
+td.rowname_neutral { padding: 0px 3px 0px 3px;
+	                 background-color: #ffffff;
+	               }
+
+td.rowname_friendly { padding: 0px 3px 0px 3px;
+	                 background-color: #3399ff;
+	               }
+
+td.rowstatus_enemy { padding: 0px 3px 0px 3px;
+	                 background-color: #ee0000;
+	               }
+
+td.rowstatus_neutral { padding: 0px 3px 0px 3px;
+	                 background-color: #ffffff;
+	               }
+
+td.rowstatus_friendly { padding: 0px 3px 0px 3px;
+	                 background-color: #3399ff;
+	               }
+
+td.rowstatdur_enemy { padding: 0px 3px 0px 3px;
+	                 background-color: #ee0000;
+	               }
+
+td.rowstatdur_neutral { padding: 0px 3px 0px 3px;
+	                 background-color: #ffffff;
+	               }
+
+td.rowstatdur_friendly { padding: 0px 3px 0px 3px;
+	                 background-color: #3399ff;
+	               }
+
+td.rowbuttons_enemy { padding: 0px 3px 0px 3px;
+	                 background-color: #ee0000;
+	               }
+
+td.rowbuttons_neutral { padding: 0px 3px 0px 3px;
+	                 background-color: #ffffff;
+	               }
+
+td.rowbuttons_friendly { padding: 0px 3px 0px 3px;
+	                 background-color: #3399ff;
+	               }
+
+body.background { background-image: url("../backgrounds/Header_PotA.jpg");
+                  background-repeat: no-repeat;
+                  background-attachment: fixed;
+                  background-position: right center;
+}

@@ -1,0 +1,143 @@
+table.menutable { background-color: #cccccc }
+
+table.menutable td.button { background-color: #ffffff }
+
+td.hidebuttons { display: none; }
+
+td.combat_button { background-color: #ee0000;
+	                 padding: 2px 5px 2px 5px;
+	                 text-align:center; }
+
+.controlwindow { font-size: large; 
+                    line-height: 150%;
+                    border-top: 20px; 
+                    position: absolute;
+                    top: 10%;
+                    right: 0px;
+                    width: 75%;
+                    height: 80%;
+                   overflow:auto;}
+
+div.musicbox { position: absolute; bottom: 0px ; left:0px; height: 10%; width: 100%}
+
+body { background-color: #d0c1b9 }
+
+div.control-topbar { width: 100%; position: absolute; top: 0px; left: 0px ; height: 10%}
+
+div.control-menu { position: absolute; left: 0px; width: 25%; top: 10%; height: 80%; }
+
+@keyframes fadeinbuttons { 
+  from { opacity: 0; display: block; visibility: visible }
+  to { opacity: 1 }
+ }
+
+ @keyframes fadeoutbuttons {
+   from { opacity: 1 }
+   to { opacity: 0; display: none; visibility: hidden }
+ }
+
+ div.nonebuttons { 
+  opacity: 0;
+  top: 50px;
+  animation-name: fadeinbuttons;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+ }
+
+  @keyframes collapsebuttons {
+    from {top: 132px;}
+    to {top:42px; }
+  }
+
+ @keyframes separatebuttons {
+    from { top: 42px; }
+    to { top: 132px; }
+ }
+
+ img.bottombutton { 
+   position: absolute;
+   top: 42px;
+   animation-name: separatebuttons;
+   animation-duration: .3s;
+   animation-fill-mode: forwards;
+ }
+ 
+ img.bottombuttonclose {
+  position: absolute;
+  top: 132px;
+  animation-name: collapsebuttons;
+  animation-duration: .3s;
+  animation-fill-mode: forwards;
+ }
+
+  div.edit_buttons_start { display: none; }
+
+ div.edit_buttons {
+  display: block;
+  position: absolute;
+  top: 42px;  
+  left: 10px;
+  z-index:2;
+  animation-name: fadeinbuttons;
+  animation-duration: .3s;
+  animation-fill-mode: forwards;
+ }
+
+ div.combatfadeout {
+  position: absolute;
+  top: 204px;
+  left: 79px;
+  z-index:2;
+  animation-name: fadeoutbuttons;
+   animation-duration: .3s;
+   animation-fill-mode: forwards;
+ }
+
+ div.runfadeout {
+  position: absolute;
+  top: 84px;  
+  left: 10px;
+  z-index:2;
+  animation-name: fadeoutbuttons;
+  animation-duration: .3s;
+  animation-fill-mode: forwards;
+}
+
+div.edit_buttons_out {
+  display: block;
+  position: absolute;
+  top: 42px;  
+  left: 10px;
+  z-index:2;
+  animation-name: fadeoutbuttons;
+  animation-duration: .3s;
+  animation-fill-mode: forwards;
+ }
+
+ div.run_buttons {
+  display: block;
+  position: absolute;
+  top: 84px;  
+  left: 10px;
+  z-index:2;
+  animation-name: fadeinbuttons;
+  animation-duration: .3s;
+  animation-fill-mode: forwards;
+ }
+
+ div.combatfadein {
+   display:block;
+   position: absolute;
+   top: 204px;
+   left: 79px;
+   z-index:2;
+   animation-name: fadeinbuttons;
+   animation-duration: .3s;
+   animation-fill-mode: forwards;
+  }
+ 
+  .notyet {
+    
+  }
+
+  
