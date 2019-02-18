@@ -39,7 +39,7 @@ function Entity() {
 	this.status_effects = new Array;
 	this.init = null;
 	this.align = "enemy";
-	this.icon = "red_skull.gif";
+	this.icon = "port_Cloud_of_Pestilence_combo_icon.png";
 	this.name = "";
 	this.displayname = "";
 	this.index = 1;
