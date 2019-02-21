@@ -19,7 +19,9 @@ let menustate = "none";
 // edit - edit buttons expanded, no run or combat buttons
 // combat - run and combat buttons expanded, no edit buttons
 
-let iconlist = [];
+let iconlist = {};
+let icontab = "Badge";
+let icondirs = [];
 let preset_groups = {};
 let locations = {};
 let soundtrack = {};
@@ -39,7 +41,7 @@ function Entity() {
 	this.status_effects = new Array;
 	this.init = null;
 	this.align = "enemy";
-	this.icon = "port_Cloud_of_Pestilence_combo_icon.png";
+	this.icon = "Other/NecromancerIcons_02_b.png";
 	this.name = "";
 	this.displayname = "";
 	this.index = 1;
@@ -68,19 +70,25 @@ Entity.prototype.clone = function(cloneme) {
 let menulock=0;
 function unlockmenu() { menulock=0; }
 
-{ 
+{
+//  let dirlist = []; 
   let dirlist = fs.readdir('./icons', function(err, files) {
     for (let i=0;i<files.length;i++) {
-      iconlist.push(files[i]);
+      let workingdir = `./icons/${files[i]}`;
+      icondirs[icondirs.length] = "" + files[i];
+      console.log("working in " + workingdir);
+      iconlist[files[i]] = [];
+      let tmp = fs.readdir(workingdir, function(err, files2) {
+        for (let j=0;j<files2.length;j++) {
+          iconlist[files[i]].push(files2[j]);
+        }
+      });    
     }
   });
-}
-{
-//  fs.readFile('./app-control/preset_groups.json','utf8', function(err,data) {
-//    preset_groups = JSON.parse(data);
-//  });
+  console.log(iconlist);
 }
 
+console.log(icondirs);
 
 function Prefs() {
 	this.showtiebreaker = 0;
@@ -595,9 +603,9 @@ function add_combatant() {
   <br />
   Armor class: <input type='text' name='com_ac' size='2' /><br />
   Hit points: <input type='text' name='com_hp' size='2' /><br />
-  Icon: <img src='../icons/red_skull.gif' width='32' height='32' id='com_icon_pic' onClick='submitAddManual("icon");' /><br />
+  Icon: <img src='../icons/Other/NecromancerIcons_02_b.png' width='32' height='32' id='com_icon_pic' onClick='submitAddManual("icon");' /><br />
   Number to add: <input type='text' name='com_addnum' size='2' />
-  <input type='hidden' value='red_skull.gif' name='com_icon' /></p>
+  <inpu1t type='hidden' value='Other/NecromancerIcons_02_b.png' name='com_icon' /></p>
   </td>
   <td id='icontd'></td></tr></table>
   <p><input type='button' value='Add to Battle' onClick='submitAddManual("add");'  />
