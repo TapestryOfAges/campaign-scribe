@@ -12,6 +12,7 @@ td.combat_button { background-color: #ee0000;
                     line-height: 150%;
                     border-top: 20px; 
                     position: absolute;
+                    vertical-align:top;
                     top: 10%;
                     right: 0px;
                     width: 75%;

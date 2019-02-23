@@ -591,7 +591,7 @@ function next_combat(type) {
 function add_combatant() {
   ack_keyboard = 0;
   document.getElementById("controlwindow").innerHTML = `		<form name='add_manually'>
-  <table cellpadding='0' cellspacing='0' border='0' class='controlwindow'><tr><td>
+  <table cellpadding='0' cellspacing='0' border='0'><tr><td style='vertical-align:top'>
   <p>Enter combatant values:<br/>
   Name: <input type='text' name='com_name' size='15' /><br />
   Align: <select name='com_align'><option value='enemy'>Enemy</option><option value='friendly'>Friendly</option>
@@ -605,9 +605,9 @@ function add_combatant() {
   Hit points: <input type='text' name='com_hp' size='2' /><br />
   Icon: <img src='../icons/Other/NecromancerIcons_02_b.png' width='32' height='32' id='com_icon_pic' onClick='submitAddManual("icon");' /><br />
   Number to add: <input type='text' name='com_addnum' size='2' />
-  <inpu1t type='hidden' value='Other/NecromancerIcons_02_b.png' name='com_icon' /></p>
+  <input type='hidden' value='Other/NecromancerIcons_02_b.png' name='com_icon' /></p>
   </td>
-  <td id='icontd'></td></tr></table>
+  <td id='icontd' style='vertical-align:top'></td></tr></table>
   <p><input type='button' value='Add to Battle' onClick='submitAddManual("add");'  />
     <input type='button' value='Select Presets' onClick='submitAddManual("preset");'  />
     <input type='button' value='Done' onClick='Create_Combat_Pane();'  /></p>
@@ -626,6 +626,38 @@ function addRollInit(val) {
   the_form.com_init.value = val;	
 }
 
+function MakeIconPane(onclicktarget) {
+  if (!onclicktarget) { onclicktarget = "select_icon";}
+  let icontable = '<table cellpadding="0" cellspacing="0" border="0"><tr>';
+//  let curri = 0;
+  for (let i=0;i<icondirs.length;i++) {
+    icontable += "<td><img src='../buttons/tab-left.png' /></td>";
+    icontable += `<td style='color:#f1d78d;background-image:url("../buttons/tab-center.png");background-repeat:repeat-x' onClick='ChangeIconTab("${icondirs[i]}")')>${icondirs[i]}</td>`;
+    icontable += "<td><img src='../buttons/tab-right.png' /></td>";
+//    if (icondirs[i] === icontab) { curri = i; }
+  }
+  icontable += '<table cellpadding="3" cellspacing="0" border="0">';
+  for (let i=0;i < iconlist[icontab].length; i++) {
+    icontable = icontable + "<tr>";
+    for (let j=0;j < 12; j++) {
+      if (i+j < iconlist[icontab].length) {
+        let icon = iconlist[icontab][i+j];
+        icontable = icontable + `<td onClick='${onclicktarget}("${icontab}/${icon}")'><img src='../icons/${icontab}/${icon}'  width='32' height='32' /></td>`;
+      }
+    }
+    i += 11;
+    icontable = icontable + "</tr>";
+  }
+  icontable = icontable + "</table>";
+  return icontable;
+}
+
+function ChangeIconTab(changeTo) {
+  icontab = changeTo;
+  let icontable = MakeIconPane();
+  document.getElementById('icontd').innerHTML = icontable;
+}
+
 function submitAddManual(which) {
 	if (which === "preset") { 
     let presetlist = Object.keys(preset_groups);
@@ -636,19 +668,7 @@ function submitAddManual(which) {
     }
     document.getElementById("controlwindow").innerHTML = showpresets;
   }  else if (which === "icon") {
-  	let icontable = '<table cellpadding="3" cellspacing="0" border="0">';
-  	for (let i=0;i < iconlist.length; i++) {
-  		icontable = icontable + "<tr>";
-  		for (let j=0;j < 12; j++) {
-  			if (i+j < iconlist.length) {
-  				let icon = iconlist[i+j];
-  				icontable = icontable + "<td onClick='select_icon(\"" + icon + "\")'><img src='../icons/" + icon + "'  width='32' height='32' /></td>";
-  			}
-  		}
-  		i += 11;
-  		icontable = icontable + "</tr>";
-  	}
-  	icontable = icontable + "</table>";
+    let icontable = MakeIconPane();
     document.getElementById('icontd').innerHTML = icontable;
   } else if (which === "add")  {
     let the_form = document.add_manually;
@@ -782,7 +802,7 @@ function deleteGroup(groupname) {
 function editGroup(groupname) {
   currently_editing = groupname;
   tempeditgroup = {};
-  tempeditgroup.icon = "horsebackriding.jpg";
+  tempeditgroup.icon = "Badge/Tex_badge_26.PNG";
   tempeditgroup.data = [];
   if (!groupname) {
     let nameprompt = "<form name='groupname'>Group name: <input name='inputname' id='inputname' type='text' size='15' /></form><br />";
@@ -824,17 +844,14 @@ function editGroup2(groupname) {
     newscreen += "<td><input type='button' value='Edit' onClick='editGroupMember(" +i+ ",\""+ groupname + "\")' /> <input type='button' value='Delete' onClick='deleteGroupMember(" +i+ ",\""+ groupname + "\")' /></td></tr>";
   }
   newscreen += "</table><input type='button' value='Add Group Member' onClick='editGroupMember(-1,\""+groupname+"\")' /><input type='button' value='Save Group' onClick='saveGroup()' /><input type='button' value='Cancel' onClick='cancelSaveGroup()' /></form>";
-  newscreen += "<p>Change icon:<br />";
-  for (let i=0;i<iconlist.length;i++) {
-    newscreen += "<img src='../icons/"+iconlist[i]+"' width='32' height='32' onClick='groupIcon("+i+")' />";
-  }
-  newscreen += "</p>";
+  newscreen += "<p>Change icon:</p>";
+  newscreen += MakeIconPane("groupIcon");
   document.getElementById("controlwindow").innerHTML = newscreen;
 }
 
 function groupIcon(idx) {
-  document.getElementById('groupicon').src = "../icons/" + iconlist[idx];
-  tempeditgroup.icon = iconlist[idx];
+  document.getElementById('groupicon').src = "../icons/" + idx;
+  tempeditgroup.icon = idx;
 }
 
 function deleteGroupMember(which) {
@@ -843,7 +860,7 @@ function deleteGroupMember(which) {
 }
 
 function editGroupMember(which) {
-  let icon = "red_skull.gif";
+  let icon = "Badge/Tex_badge_26.PNG";
   let ename = "";
   let einitmod = 0;
   let ealign = "enemy";
@@ -858,6 +875,7 @@ function editGroupMember(which) {
     ehp = tempeditgroup.data[which].hitpoints;
   }
   let newscreen = "<form id='groupentity'><img src='../icons/"+icon+"' width='32' height='32' id='entityicon' /><br />";
+  newscreen += "<table cellpadding='0' cellspacing='2' border='0'><tr><td style='vertical-align:top'>";
   newscreen += "Name: <input name='formname' type='text' size='16' value='"+ename+"' /><br />";
   newscreen += "Init Mod: <img src='../buttons/Square-Button-Minus.png' onclick='modEditMod(-1)' width='32' height='32' /> <input name='forminit' id='forminit' type='text' size='2' value='"+einitmod+"' /> <img src='../buttons/Square-Button-Plus.png' onclick='modEditMod(1)' width='32' height='32' /><br />";
   newscreen += "Armor Class: <input name='formac' type='text' size='2' value='"+eac+"' /><br />";
@@ -871,12 +889,10 @@ function editGroupMember(which) {
   else { newscreen += "<option value='enemy'>Enemy</option>"; }
   newscreen += "</select><br />";
   newscreen += "Quant: <input name='formquant' type='text' size='2' /><br />";
-  newscreen += "<input type='button' onClick='submitGroupMember("+which+")' value='Submit' /> <input type='button' onClick='editGroup2(\""+currently_editing+"\")' value='Cancel' />";
-  newscreen += "<p>Change icon:<br />";
-  for (let i=0;i<iconlist.length;i++) {
-    newscreen += "<img src='../icons/"+iconlist[i]+"' width='32' height='32' onClick='changeMemberIcon("+i+")' />";
-  }
-  newscreen += "</p>";
+  newscreen += "<input type='button' onClick='submitGroupMember("+which+")' value='Submit' /> <input type='button' onClick='editGroup2(\""+currently_editing+"\")' value='Cancel' /></td>";
+  newscreen += "<td style='vertical-align:top'>Change icon:";
+  newscreen += MakeIconPane('changeMemberIcon');
+  newscreen += "</td></tr></table>";
   document.getElementById("controlwindow").innerHTML = newscreen;
 }
 
@@ -887,7 +903,7 @@ function modEditMod(how) {
 }
 
 function changeMemberIcon(idx) {
-  document.getElementById('entityicon').src="../icons/"+iconlist[idx];
+  document.getElementById('entityicon').src="../icons/"+idx;
 }
 
 function submitGroupMember(which) {
