@@ -31,6 +31,7 @@ let launched_display = 0;
 let current_location;
 let explosion = new Audio("../sounds/exp05.mp3");
 let tmpbackground = "";
+let selectedentity;
 
 // editing
 let currently_editing = "";
@@ -38,7 +39,7 @@ let tempeditgroup = {};
 
 function Entity() {
 	this.initmod = 0;
-	this.status_effects = new Array;
+	this.status_effects = [];
 	this.init = null;
 	this.align = "enemy";
 	this.icon = "Other/NecromancerIcons_02_b.png";
@@ -76,7 +77,6 @@ function unlockmenu() { menulock=0; }
     for (let i=0;i<files.length;i++) {
       let workingdir = `./icons/${files[i]}`;
       icondirs[icondirs.length] = "" + files[i];
-      console.log("working in " + workingdir);
       iconlist[files[i]] = [];
       let tmp = fs.readdir(workingdir, function(err, files2) {
         for (let j=0;j<files2.length;j++) {
@@ -85,10 +85,8 @@ function unlockmenu() { menulock=0; }
       });    
     }
   });
-  console.log(iconlist);
 }
 
-console.log(icondirs);
 
 function Prefs() {
 	this.showtiebreaker = 0;
@@ -125,6 +123,7 @@ document.addEventListener("DOMContentLoaded", function(event) {   // replaces $(
     ipcRenderer.send("send_prefs", myprefs);
   }
   
+  SetUpStatuses();
 });
 
 
@@ -145,6 +144,10 @@ function load_campaign() {
       myprefs = dataset.myprefs;
       locations = dataset.locations;
       soundtrack = dataset.soundtrack;
+      userabilities = dataset.userabilities;
+      abilitiesmask = dataset.abilitiesmask
+      userspells = dataset.userspells;
+      spellsmask = dataset.spellsmask;
     });
 
     show_campaign_buttons();
@@ -163,6 +166,10 @@ function save_campaign() {
     campaign.preset_groups = preset_groups;
     campaign.myprefs = myprefs;
     campaign.locations = locations;
+    campaign.abilities = userabilities;
+    campaign.abilitiesmask = abilitiesmask;
+    campaign.spells = userspells;
+    campaign.spellsmask = spellsmask;
     fs.writeFile(filename,JSON.stringify(campaign),'utf8', function() {});
   });
 }
@@ -176,6 +183,7 @@ function show_campaign_buttons(callbacks) {
     </div>
     <div id='edit_buttons_group' class='edit_buttons_start'><img src='../ui/edit_locations.png' style='position:relative; top: 0px;' onclick='edit_locations()' />
   <img src='../ui/edit_preset_groups.png' style='position:relative; top: 0px;' onclick='edit_presets()' />
+  <img src='../ui/edit_status.png' style='position:relative; top: 0px;' onclick='edit_status()' />
   <img src='../ui/edit_soundtrack.png' style='position:relative; top: 0px;' onclick='edit_soundtrack()' /></div>
     <div id='run_buttons_group' class='edit_buttons_start'><img src='../ui/change_location.png' onclick='change_location()' />
     <img src='../ui/change_background.png' onClick='change_background()' />
@@ -844,8 +852,9 @@ function editGroup2(groupname) {
     newscreen += "<td><input type='button' value='Edit' onClick='editGroupMember(" +i+ ",\""+ groupname + "\")' /> <input type='button' value='Delete' onClick='deleteGroupMember(" +i+ ",\""+ groupname + "\")' /></td></tr>";
   }
   newscreen += "</table><input type='button' value='Add Group Member' onClick='editGroupMember(-1,\""+groupname+"\")' /><input type='button' value='Save Group' onClick='saveGroup()' /><input type='button' value='Cancel' onClick='cancelSaveGroup()' /></form>";
-  newscreen += "<p>Change icon:</p>";
+  newscreen += "<p>Change icon:</p><div id='icontd'>";
   newscreen += MakeIconPane("groupIcon");
+  newscreen += "</div>";
   document.getElementById("controlwindow").innerHTML = newscreen;
 }
 
@@ -890,9 +899,9 @@ function editGroupMember(which) {
   newscreen += "</select><br />";
   newscreen += "Quant: <input name='formquant' type='text' size='2' /><br />";
   newscreen += "<input type='button' onClick='submitGroupMember("+which+")' value='Submit' /> <input type='button' onClick='editGroup2(\""+currently_editing+"\")' value='Cancel' /></td>";
-  newscreen += "<td style='vertical-align:top'>Change icon:";
+  newscreen += "<td style='vertical-align:top'>Change icon:<div id='icontd'>";
   newscreen += MakeIconPane('changeMemberIcon');
-  newscreen += "</td></tr></table>";
+  newscreen += "</div></td></tr></table>";
   document.getElementById("controlwindow").innerHTML = newscreen;
 }
 

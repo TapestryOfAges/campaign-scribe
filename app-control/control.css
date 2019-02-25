@@ -19,6 +19,22 @@ td.combat_button { background-color: #ee0000;
                     height: 80%;
                    overflow:auto;}
 
+div.statusmodal {
+  position: absolute;
+  left: 300px;
+  top: 150px;
+  width: 400px;
+  height: 400px;
+  display: none;
+  overflow-y: auto;
+  background-color: gold;
+}
+
+.statuseffect {
+  height:32px;
+  width:32px;
+}
+
 div.musicbox { position: absolute; bottom: 0px ; left:0px; height: 10%; width: 100%}
 
 body { background-color: #d0c1b9 }
@@ -46,13 +62,13 @@ div.control-menu { position: absolute; left: 0px; width: 25%; top: 10%; height: 
  }
 
   @keyframes collapsebuttons {
-    from {top: 132px;}
+    from {top: 162px;}
     to {top:42px; }
   }
 
  @keyframes separatebuttons {
     from { top: 42px; }
-    to { top: 132px; }
+    to { top: 162px; }
  }
 
  img.bottombutton { 

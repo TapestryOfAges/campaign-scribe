@@ -137,33 +137,28 @@ function make_row(person) {
 	}
 	stat1 += `</span></td></tr></table>`;
 
-	var stat2 = "";
-	var statdur2 = "";
-	if (person.stat2) { 
-		stat2 = person.stat2;
-		statdur2 = `<table cellpadding='0' cellspacing='0' border='0'><tr><td>${person.statdur2}</td><td>`;
-		if (person.statdur2 !== "-") {
-		  statdur2 = statdur2+ `&nbsp;<img src='../buttons/button-down.gif' width='14' height='14' onClick='reduceDur("${person.name}", "${person.index}", 2)' />`;
+	let stat2 = "";
+  for (let i=0;i<person.status_effects.length;i++) {
+		let st;
+		for (let j in statuses) {
+			if (person.status_effects[i] === j) { st = '../statuseffects/' + statuses[j]; break; }
 		}
-		statdur2 = statdur2 + `&nbsp;<img src='../buttons/button-X.gif' width='18' height='18' onClick='removeStatus("${person.name}", "${person.index}", 2)' /></td></tr></table>`;
-	}
-	var stat3 = "";
-	var statdur3 = "";
-	if (person.stat3) { 
-		stat3 = person.stat3; 
-		statdur3 = `<table cellpadding='0' cellspacing='0' border='0'><tr><td>${person.statdur3}</td><td>`;
-		if (person.statdur3 !== "-") {
-		  statdur3 = statdur3 + `&nbsp;<img src='../buttons/button-down.gif' width='14' height='14' onClick='reduceDur("${person.name}", "${person.index}", 3)' />`;
+		if (!st) {
+  		for (let j in abilities) {
+	  		if (person.status_effects[i] === j) { st = '../statuseffects/' + abilities[j]; break; }
+			}
+		} 
+		if (!st) {
+      st = '../statuseffects/' + spells[person.status_effects[i]];
 		}
-		statdur3 = statdur3 + `&nbsp;<img src='../buttons/button-X.gif' width='18' height='18' onClick='removeStatus("${person.name}", "${person.index}", 3)' /></td></tr></table>`;
+    stat2 += `<img src='${st}' onClick='removeStat("${person.name}", "${person.index}", ${i})' class='statuseffect' />`;
 	}
+	stat2 += `<img src='../buttons/button-plus.gif' class='headonly' onclick="addStat('${person.name}', '${person.index}')" />`;
+
 	row = row + `<td class='rowstatus_${person.align} headonly' id='${person.name}_${person.index}_rowstat1' >${stat1}</td>`;
-	row = row + `<td width='100' class='rowstatus_${person.align}' id='${person.name}_${person.index}_rowstat2' ondblclick="getInput('${person.name}', '${person.index}', 'stat2')">${stat2}</td>`;
-	row = row + `<td width='20' class='rowstatdur_${person.align}' id='${person.name}_${person.index}_rowstatdur2' ondblclick="getInput('${person.name}', '${person.index}', 'statdur2')">${statdur2}</td>`;
-	row = row + `<td width='100' class='rowstatus_${person.align}' id='${person.name}_${person.index}_rowstat3' ondblclick="getInput('${person.name}', '${person.index}', 'stat3')">${stat3}</td>`;
-	row = row + `<td width='20' class='rowstatdur_${person.align}' id='${person.name}_${person.index}_rowstatdur3' ondblclick="getInput('${person.name}', '${person.index}', 'statdur3')">${statdur3}</td>`;
-  row = row + `<td width='30' id='${person.name}_${person.index}_rowkill' onclick='killCombatant("${person.name}", "${person.index}")'><img src='../buttons/button-x.gif' width='30' height='30' /></td>`;
-  row = row + `<td id='${person.name}_${person.index}_rowbuttons' class='rowbuttons_${person.align}' />&nbsp;</td>`;
+	row = row + `<td width='100' class='rowstatus_${person.align}' id='${person.name}_${person.index}_rowstat2'>${stat2}</td>`;
+  row = row + `<td width='30' id='${person.name}_${person.index}_rowkill' class='headonly' onclick='killCombatant("${person.name}", "${person.index}")'><img src='../buttons/button-x.gif' width='30' height='30' /></td>`;
+  row = row + `<td id='${person.name}_${person.index}_rowbuttons' class='rowbuttons_${person.align} headonly' />&nbsp;</td>`;
 	row = row + "</tr>";
 	return row;
 }
@@ -179,7 +174,7 @@ function add_to_bottom(person) {
 
 function makeTable() {
 	let table = "<table id='inittable' class='inittable' border='1' cellspacing='1' cellpadding='0'><tr class='headrow'>";
-	table = table + "<th></th><th></th><th>Init</th><th>Combatant</th><th class='headonly'></th><th>Status</th><th>Dur</th><th>Status</th><th>Dur</th><th>Kill</th><th></th>";
+	table = table + "<th></th><th></th><th>Init</th><th>Combatant</th><th class='headonly'></th><th>Status</th><th class='headonly'>Kill</th><th></th>";
 	table = table + "</tr>";
 	for (let i=0; i < display.length; i++) {
 		table = table + display[i];
@@ -307,12 +302,6 @@ function drawTable() {
 	    document.getElementById(rowid).style.fontWeight = "bold";
     	rowid = cur_combat.name + "_" + cur_combat.index + "_rowstat2";
       document.getElementById(rowid).style.fontWeight = "bold";
-    	rowid = cur_combat.name + "_" + cur_combat.index + "_rowstatdur2";
-      document.getElementById(rowid).style.fontWeight = "bold";
-    	rowid = cur_combat.name + "_" + cur_combat.index + "_rowstat3";
-      document.getElementById(rowid).style.fontWeight = "bold";
-    	rowid = cur_combat.name + "_" + cur_combat.index + "_rowstatdur3";
-      document.getElementById(rowid).style.fontWeight = "bold";
     }
 	}
 	update_display();
@@ -329,6 +318,7 @@ function clear_combatants() {
 }
 
 function set_active_row(rowid,color) {
+	console.log(rowid);
 	document.getElementById(rowid).style.backgroundColor = color;
 	if (myprefs.boldtext == 1) { 
 		document.getElementById(rowid).style.fontWeight = "bold";
@@ -365,9 +355,6 @@ function set_active_player(prev) {
 	set_active_row(cur_combat.name + "_" + cur_combat.index + "_rowname", color);
 	set_active_row(cur_combat.name + "_" + cur_combat.index + "_rowstat1", color);
   set_active_row(cur_combat.name + "_" + cur_combat.index + "_rowstat2", color);
-  set_active_row(cur_combat.name + "_" + cur_combat.index + "_rowstatdur2", color);
-  set_active_row(cur_combat.name + "_" + cur_combat.index + "_rowstat3", color);
-  set_active_row(cur_combat.name + "_" + cur_combat.index + "_rowstatdur3", color);
 	rowid = cur_combat.name + "_" + cur_combat.index + "_rowbuttons";
 	document.getElementById(rowid).innerHTML = "";
   document.getElementById(rowid).style.backgroundColor = color;
@@ -390,9 +377,6 @@ function set_active_player(prev) {
   set_active_row(cur_combat.name + "_" + cur_combat.index + "_rowname", color);
   set_active_row(cur_combat.name + "_" + cur_combat.index + "_rowstat1", color);
   set_active_row(cur_combat.name + "_" + cur_combat.index + "_rowstat2", color);
-  set_active_row(cur_combat.name + "_" + cur_combat.index + "_rowstatdur2", color);
-  set_active_row(cur_combat.name + "_" + cur_combat.index + "_rowstat3", color);
-  set_active_row(cur_combat.name + "_" + cur_combat.index + "_rowstatdur3", color);
 	rowid = cur_combat.name + "_" + cur_combat.index + "_rowbuttons";
 	document.getElementById(rowid).innerHTML = "<img src='../buttons/green-delay.gif' onclick='changestate(\"" + cur_combat.name + "\", \"" + cur_combat.index + "\", \"delay\")' /> &nbsp; <img src='../buttons/green-ready.gif' onclick='changestate(\"" + cur_combat.name + "\", \"" + cur_combat.index + "\", \"ready\")' />";
   document.getElementById(rowid).style.backgroundColor = color;
