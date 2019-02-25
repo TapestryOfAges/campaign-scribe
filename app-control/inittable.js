@@ -139,18 +139,18 @@ function make_row(person) {
 
 	let stat2 = "";
   for (let i=0;i<person.status_effects.length;i++) {
-		let st;
-		for (let j in statuses) {
-			if (person.status_effects[i] === j) { st = '../statuseffects/' + statuses[j]; break; }
-		}
-		if (!st) {
-  		for (let j in abilities) {
-	  		if (person.status_effects[i] === j) { st = '../statuseffects/' + abilities[j]; break; }
-			}
-		} 
-		if (!st) {
-      st = '../statuseffects/' + spells[person.status_effects[i]];
-		}
+		let st = FindStatusName(person.status_effects[i], 1);
+//		for (let j in statuses) {
+//			if (person.status_effects[i] === j) { st = '../statuseffects/' + statuses[j]; break; }
+//		}
+//		if (!st) {
+//  		for (let j in abilities) {
+//	  		if (person.status_effects[i] === j) { st = '../statuseffects/' + abilities[j]; break; }
+//			}
+//		} 
+//		if (!st) {
+//      st = '../statuseffects/' + spells[person.status_effects[i]];
+//		}
     stat2 += `<img src='${st}' onClick='removeStat("${person.name}", "${person.index}", ${i})' class='statuseffect' />`;
 	}
 	stat2 += `<img src='../buttons/button-plus.gif' class='headonly' onclick="addStat('${person.name}', '${person.index}')" />`;

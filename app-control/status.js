@@ -165,3 +165,24 @@ function removeStat(whoname, whoid, statindex) {
 function edit_status() {
   
 }
+
+function FindStatusName(statname, usepath) {
+  let path = "";
+  if (usepath) { path = " ../statuseffects/"; }
+  for (let i in statuses) {
+    if (i === name) { return path + "" + statuses[i]; }
+  }
+  for (let i in abilities) {
+    if (i === name) { return path + "" + abilities[i]; }
+  }
+  for (let i in userabilities) {
+    if (i === name) { return userabilities[i]; }
+  }
+  for (let i in spells) {
+    if (i === name) { return path + "" + spells[i]; }
+  }
+  for (let i in userspells) {
+    if (i === name) { return userspells[i]; }
+  }
+  return null;
+}
