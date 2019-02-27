@@ -139,7 +139,9 @@ function make_row(person) {
 
 	let stat2 = "";
   for (let i=0;i<person.status_effects.length;i++) {
-		let st = FindStatusName(person.status_effects[i], 1);
+		let st = encodeURI(FindStatusByName(person.status_effects[i]));
+		console.log(st);
+		
 //		for (let j in statuses) {
 //			if (person.status_effects[i] === j) { st = '../statuseffects/' + statuses[j]; break; }
 //		}
@@ -151,12 +153,12 @@ function make_row(person) {
 //		if (!st) {
 //      st = '../statuseffects/' + spells[person.status_effects[i]];
 //		}
-    stat2 += `<img src='${st}' onClick='removeStat("${person.name}", "${person.index}", ${i})' class='statuseffect' />`;
+    stat2 += `<img src="${st}" onClick='removeStat("${person.name}", "${person.index}", ${i})' class='statuseffect' />`;
 	}
 	stat2 += `<img src='../buttons/button-plus.gif' class='headonly' onclick="addStat('${person.name}', '${person.index}')" />`;
 
 	row = row + `<td class='rowstatus_${person.align} headonly' id='${person.name}_${person.index}_rowstat1' >${stat1}</td>`;
-	row = row + `<td width='100' class='rowstatus_${person.align}' id='${person.name}_${person.index}_rowstat2'>${stat2}</td>`;
+	row = row + `<td class='rowstatus_${person.align}' id='${person.name}_${person.index}_rowstat2'>${stat2}</td>`;
   row = row + `<td width='30' id='${person.name}_${person.index}_rowkill' class='headonly' onclick='killCombatant("${person.name}", "${person.index}")'><img src='../buttons/button-x.gif' width='30' height='30' /></td>`;
   row = row + `<td id='${person.name}_${person.index}_rowbuttons' class='rowbuttons_${person.align} headonly' />&nbsp;</td>`;
 	row = row + "</tr>";

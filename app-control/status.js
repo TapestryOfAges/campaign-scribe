@@ -9,37 +9,45 @@ let abilitiesmask = {};
 let userspells = {};
 let spellsmask = {};
 
+class condition {
+  constructor(filepath, desc) {
+    this.filepath = filepath;
+    this.desc = desc;
+    this.enabled = 1;
+  }
+}
+
 // 5E
-statuses["Blinded"] = "blinded.png";  
-statuses["Charmed"] = "charmed.png";  
-statuses["Deafened"] = "deafened.png"; 
-statuses["Exhaustion"] = "exhausted.png"; 
-statuses["Frightened"] = "fear.png";  
-statuses["Grappled"] = "grappled.png"; 
-statuses["Incapacitated"] = "incapacitated.png"; 
-statuses["Invisible"] = "invisible.png";  
-statuses["Paralyzed"] = "paralyzed.png"; 
-statuses["Petrified"] = "petrified.png"; 
-statuses["Poisoned"] = "poisoned.png"; 
-statuses["Prone"] = "prone.png"; 
-statuses["Restrained"] = "restrained.png"; 
-statuses["Stunned"] = "stunned.png";   
-statuses["Unconscious"] = "unconscious.png"; 
-statuses["Dying"] = "dying.png"; 
-statuses["Concentrating"] = "concentrating.png"; 
+statuses["Blinded"] = new condition("../statuseffects/blinded.png", "Can't see. Disadv on Atks. Adv on Atks targeting.");
+statuses["Charmed"] = new condition("../statuseffects/charmed.png", "Can't Atk charmer. Charmer has Adv on social.");  
+statuses["Deafened"] = new condition("../statuseffects/deafened.png", "Can't hear."); 
+statuses["Exhaustion"] = new condition("../statuseffects/exhausted.png", "See chart."); 
+statuses["Frightened"] = new condition("../statuseffects/fear.png", "Disadv on AbChks and Atks while fear source is visible. Can't approach.");  
+statuses["Grappled"] = new condition("../statuseffects/grappled.png", "Speed 0."); 
+statuses["Incapacitated"] = new condition("../statuseffects/incapacitated.png", "Can't take actions or reactions."); 
+statuses["Invisible"] = new condition("../statuseffects/invisible.png", "Atks have adv, Atks targetting have Disadv.");  
+statuses["Paralyzed"] = new condition("../statuseffects/paralyzed.png", "Incapacitated (no actions or reactions). Fails Str and Dex saves. Atks targetting have Adv. Atks that hit from <=5' auto-crit."); 
+statuses["Petrified"] = new condition("../statuseffects/petrified.png", "Stone. Incapacitated (no actions or reactions). Atks targetting have Adv. Resist all damage. Fails Str and Dex saves."); 
+statuses["Poisoned"] = new condition("../statuseffects/poisoned.png", "Disadv on Atks and AbChks."); 
+statuses["Prone"] = new condition("../statuseffects/prone.png", "Only crawl. Disadv on atks. Atks targetting from <=5' have Adv, otherwise have Disadv."); 
+statuses["Restrained"] = new condition("../statuseffects/restrained.png", "Speed 0. Atks have Disadv. Atks targetting have Adv. Disadv on Dex saves."); 
+statuses["Stunned"] = new condition("../statuseffects/stunned.png", "Incapacitated (no actions or reactions). Fails Str and Dex saves. Atks targetting had Adv.");   
+statuses["Unconscious"] = new condition("../statuseffects/unconscious.png", "Incapacitated (no actions or reactions). Fails Str and Dex saves. Atks targetting have Adv. Atks that hit from <=5' auto-crit."); 
+statuses["Dying"] = new condition("../statuseffects/dying.png", "Must make death saves."); 
+statuses["Concentrating"] = new condition("../statuseffects/concentrating.png", "Con save to preserve concentration."); 
 
-abilities["Ancestral Protectors"] = "ancestral_protectors.png";
-abilities["Flames of Phlegethos"] = "flames_of_phlegethos.png";
-abilities["Raging"] = "raging.png";
-abilities["Reckless Attack"] = "reckless_attack.png";
+abilities["Ancestral Protectors"] = new condition("../statuseffects/ancestral_protectors.png", "Atks have disadv unless against barb. Targets other than barb hit resistance that damage.");
+abilities["Flames of Phlegethos"] = new condition("../statuseffects/flames_of_phlegethos.png", "Creatures that hit from <=5' take 1d4 fire.");
+abilities["Raging"] = new condition("../statuseffects/raging.png", "Adv on Str chks/saves. Str melee atks gain dmg. Resist BPS.");
+abilities["Reckless Attack"] = new condition("../statuseffects/reckless_attack.png", "Adv on Str melee atks. Atks targetting gain Adv.");
 
-spells["Absorb Elements"] = "absorb_elements.png";
-spells["Dragon's Breath"] = "dragon's_breath.png";
-spells["Faerie Fire"] = "faerie_fire.png";
-spells["Frostbite"] = "frostbite.png";
-spells["Guidance"] = "guidance.png";
-spells["Maximilian's Earthen Grasp"] = "maximilian's_earthen_grasp.png";
-spells["Shocking Grasp"] = "shocking_grasp.png";
+spells["Absorb Elements"] = new condition("../statuseffects/absorb_elements.png", "Resist dmg type until turn start. First time you hit with melee on next turn, add Ld6 dmg of Type.");
+spells["Dragon's Breath"] = new condition("../statuseffects/dragon's_breath.png", "Can breathe Type in 15' cone. Deals (2+L)d6 Type damage, Dex save half.");
+spells["Faerie Fire"] = new condition("../statuseffects/faerie_fire.png", "Atk targetting have Adv. Cannot be Invisible.");
+spells["Frostbite"] = new condition("../statuseffects/frostbite.png", "Disadv on next wpn atk before end of next turn.");
+spells["Guidance"] = new condition("../statuseffects/guidance.png", "May add 1d4 to one AbChk.");
+spells["Maximilian's Earthen Grasp"] = new condition("../statuseffects/maximilian's_earthen_grasp.png", "Restrained. (Speed 0. Atks have Disadv. Atks targetting have Adv. Disadv on Dex saves.)");
+spells["Shocking Grasp"] = new condition("../statuseffects/shocking_grasp.png", "Cannot take reactions until start of turn.");
 // Tmp storage
 //abilities["Bless"] = "r_20.png";
 //spells["Haste"] = "g_14.png";
@@ -57,9 +65,15 @@ function SetUpStatuses() {
   }
   statlist = statlist.sort();
   for (let i=0;i<statlist.length;i++){
+    if (!FindStatusByName(statlist[i],"enabled")) { continue; }
     if (first) { first = 0; }
     else { statusmod += "<br />"; }
-    statusmod += `<span onclick="SelectStatus('${statlist[i]}')">${statlist[i]}</span>`;
+    let statname = statlist[i];
+    let statname2 = statlist[i];
+    statname = statname.replace("'","\'");
+    statname = statname.replace("'","\\'");
+    let staticon = FindStatusByName(statname2);
+    statusmod += `<span onclick="SelectStatus('${statname}')"><img src="${staticon}" height="16" /> ${statname2}</span>`;
   }
   first = 1;
   statusmod += "</p><h3 style='text-align:center'>Abilities</h3><p>";
@@ -67,23 +81,41 @@ function SetUpStatuses() {
   for (let status in abilities) {
     statlist.push(status);
   }
+  for (let status in userabilities) { 
+    statlist.push(status);
+  }
   statlist = statlist.sort();
   for (let i=0;i<statlist.length;i++) {
+    if (!FindStatusByName(statlist[i],"enabled")) { continue; }
     if (first) { first = 0; }
     else { statusmod += "<br />"; }
-    statusmod += `<span onclick="SelectStatus('${statlist[i]}')">${statlist[i]}</span>`;
+    let statname = statlist[i];
+    let statname2 = statlist[i];
+    statname = statname.replace("'","\'");
+    statname = statname.replace("'","\\'");
+    let staticon = FindStatusByName(statname2);
+    statusmod += `<span onclick="SelectStatus('${statname}')"><img src="${staticon}" height="16" /> ${statname2}</span>`;
   }
-  statusmod += "</p><h3 style='text-align:center'>Abilities</h3><p>";
+  statusmod += "</p><h3 style='text-align:center'>Spells</h3><p>";
   first = 1;
   statlist = [];
   for (let status in spells) {
     statlist.push(status);
   }
+  for (let status in userspells) {
+    statlist.push(status);
+  }
   statlist = statlist.sort();
   for (let i=0;i<statlist.length;i++) {
+    if (!FindStatusByName(statlist[i],"enabled")) { continue; }
     if (first) { first = 0; }
     else { statusmod += "<br />"; }
-    statusmod += `<span onclick="SelectStatus('${statlist[i]}')">${statlist[i]}</span>`;
+    let statname = statlist[i];
+    let statname2 = statlist[i];
+    statname = statname.replace("'","\'");
+    statname = statname.replace("'","\\'");
+    let staticon = FindStatusByName(statname2);
+    statusmod += `<span onclick="SelectStatus('${statname}')"><img src="${staticon}" height="16" /> ${statname2}</span>`;
   }
   statusmod += "</p>";
   document.getElementById('statuses').innerHTML = statusmod;
@@ -97,7 +129,7 @@ function tmp() {
     statnum++;
     if (statnum===6) { statnum=1; }
     if (statnum===1) { statusmod += "<tr>"; }
-    statusmod += `<td onclick="SelectStatus('${status}')" style="text-align:center;vertical-align:top"><img src="../statuseffects/${statuses[status]}" width="32" /><br />${status}</td>`;
+    statusmod += `<td style="text-align:center;vertical-align:top"><img src="${statuses[status]}" width="32" /><br />${status}</td>`;
     if (statnum===5) { statusmod += "</tr>";}
   }
   while (statnum < 5) {
@@ -111,7 +143,7 @@ function tmp() {
     statnum++;
     if (statnum===6) { statnum=1; }
     if (statnum===1) { statusmod += "<tr>"; }
-    statusmod += `<td onclick="SelectStatus('${status}')" style="text-align:center;vertical-align:top"><img src="../statuseffects/${abilities[status]}" width="32" /><br />${status}</td>`;
+    statusmod += `<td onclick="SelectStatus('${status}')" style="text-align:center;vertical-align:top"><img src="${abilities[status]}" width="32" /><br />${status}</td>`;
     if (statnum===5) { statusmod += "</tr>";}
   }
   while (statnum < 5) {
@@ -125,7 +157,7 @@ function tmp() {
     statnum++;
     if (statnum===6) { statnum=1; }
     if (statnum===1) { statusmod += "<tr>"; }
-    statusmod += `<td onclick="SelectStatus('${status}')" style="text-align:center;vertical-align:top"><img src="../statuseffects/${spells[status]}" width="32" /><br />${status}</td>`;
+    statusmod += `<td onclick="SelectStatus('${status}')" style="text-align:center;vertical-align:top"><img src="${spells[status]}" width="32" /><br />${status}</td>`;
     if (statnum===5) { statusmod += "</tr>";}
   }
   while (statnum < 5) {
@@ -166,23 +198,28 @@ function edit_status() {
   
 }
 
-function FindStatusName(statname, usepath) {
-  let path = "";
-  if (usepath) { path = " ../statuseffects/"; }
+function FindStatusByName(name, field) {
+  if (!field) { field = "filepath"; }
+  let gotstat = null;
   for (let i in statuses) {
-    if (i === name) { return path + "" + statuses[i]; }
+    if (i === name) { gotstat = statuses[i]; }
   }
   for (let i in abilities) {
-    if (i === name) { return path + "" + abilities[i]; }
+    if (i === name) { gotstat = abilities[i]; }
   }
   for (let i in userabilities) {
-    if (i === name) { return userabilities[i]; }
+    if (i === name) { gotstat = userabilities[i]; }
   }
   for (let i in spells) {
-    if (i === name) { return path + "" + spells[i]; }
+    if (i === name) { gotstat = spells[i]; }
   }
   for (let i in userspells) {
-    if (i === name) { return userspells[i]; }
+    if (i === name) { gotstat = userspells[i]; }
   }
-  return null;
+//  if (field === "filepath") { 
+//    let statpath = gotstat[field];
+//    statpath = statpath.replace("'","\\'");
+//    return statpath;
+//  }
+  return gotstat[field];
 }
