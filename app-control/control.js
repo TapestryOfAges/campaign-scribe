@@ -640,7 +640,7 @@ function MakeIconPane(onclicktarget) {
 //  let curri = 0;
   for (let i=0;i<icondirs.length;i++) {
     icontable += "<td><img src='../buttons/tab-left.png' /></td>";
-    icontable += `<td style='color:#f1d78d;background-image:url("../buttons/tab-center.png");background-repeat:repeat-x' onClick='ChangeIconTab("${icondirs[i]}")')>${icondirs[i]}</td>`;
+    icontable += `<td style='color:#f1d78d;background-image:url("../buttons/tab-center.png");background-repeat:repeat-x' onClick='ChangeIconTab("${icondirs[i]}", "${onclicktarget}")')>${icondirs[i]}</td>`;
     icontable += "<td><img src='../buttons/tab-right.png' /></td>";
 //    if (icondirs[i] === icontab) { curri = i; }
   }
@@ -660,9 +660,9 @@ function MakeIconPane(onclicktarget) {
   return icontable;
 }
 
-function ChangeIconTab(changeTo) {
+function ChangeIconTab(changeTo, paneTarget) {
   icontab = changeTo;
-  let icontable = MakeIconPane();
+  let icontable = MakeIconPane(paneTarget);
   document.getElementById('icontd').innerHTML = icontable;
 }
 
