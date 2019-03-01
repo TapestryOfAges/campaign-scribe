@@ -124,38 +124,47 @@ function SetUpStatuses() {
 function EditStatusLists() { 
   let statusmod = "<form id='stats'>";
   statusmod = "<h3 style='text-align:center'>Statuses</h3><br /><table cellpadding='0' cellspacing='4' border='0'>";
-  MakeConditionTable(statuses);
+  statusmod += MakeConditionTable(statuses);
   statusmod += "<h3 style='text-align:center'>Abilities</h3><br /><table cellpadding='0' cellspacing='4' border='0'>";
-  MakeConditionTable(abilities);
-  MakeConditionTable(userabilties);
+  statusmod += MakeConditionTable(abilities);
+  statusmod += MakeConditionTable(userabilities);
+  statusmod += `<input type="button" value="Add Ability" onClick="PerformAddStatus('ability')" /><br />`;
   statusmod += "<h3 style='text-align:center'>Spells</h3><br /><table cellpadding='0' cellspacing='4' border='0'>";
-  MakeConditionTable(spells);
-  MakeConditionTable(userspells);
-  statusmod += `</form><br /><input type="button" value="Submit" onClick="PerformEditStatusList();" />`
+  statusmod += MakeConditionTable(spells);
+  statusmod += MakeConditionTable(userspells);
+  statusmod += `</form><input type="button" value="Add Spell" onClick="PerformAddStatus('spell')" /><br /><input type="button" value="Submit" onClick="PerformEditStatusList();" />`
   document.getElementById('controlwindow').innerHTML = statusmod;
 }
 
 function MakeConditionTable(source) {
   let statnum = 0;
+  let statusmod = "";
   for (let status in source) {
     statnum++;
-    if (statnum===6) { statnum=1; }
+    if (statnum===10) { statnum=1; }
     if (statnum===1) { statusmod += "<tr>"; }
     let img = FindStatusByName(status);
     statusmod += `<td style="text-align:center;vertical-align:top"><img src="${img}" width="32" /><br />${status}<br /><input type="checkbox" name="chk_${status}" id="chk_${status}" `;
     if (FindStatusByName(status,"enabled")) { statusmod += "checked "; }    
-    statusmod += `/></td>`;
-    if (statnum===5) { statusmod += "</tr>";}
+    statusmod += `/>`;
+    if ((source === "userabilities") || (source === "userspells")) {
+      statusmod += ` <img src="../ui/Square-Button-Delete.png" width="16" id='del_${status}' onClick="DeleteCondition(${status},${source})" />`;
+    }
+    statusmod += `</td>`;
+    if (statnum===9) { statusmod += "</tr>";}
   }
-  while (statnum < 5) {
+  while (statnum < 9) {
     statusmod += "<td></td>";
     statnum++;
-    if (statnum===5) { statusmod += "</tr>"; }
+    if (statnum===9) { statusmod += "</tr>"; }
   }
   statusmod += "</table>";
   return statusmod;
 }
 
+function DeleteCondition(st,sta) {
+  delete sta[st];
+}
 function CancelStatus(redraw) {
   document.getElementById('statuses').style.display = "none";
   if (redraw) { drawTable(); }
