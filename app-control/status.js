@@ -121,52 +121,39 @@ function SetUpStatuses() {
   document.getElementById('statuses').innerHTML = statusmod;
 }
 
-function tmp() { 
+function EditStatusLists() { 
   let statusmod = "<form id='stats'>";
   statusmod = "<h3 style='text-align:center'>Statuses</h3><br /><table cellpadding='0' cellspacing='4' border='0'>";
-  let statnum = 0;
-  for (let status in statuses) {
-    statnum++;
-    if (statnum===6) { statnum=1; }
-    if (statnum===1) { statusmod += "<tr>"; }
-    statusmod += `<td style="text-align:center;vertical-align:top"><img src="${statuses[status]}" width="32" /><br />${status}</td>`;
-    if (statnum===5) { statusmod += "</tr>";}
-  }
-  while (statnum < 5) {
-    statusmod += "<td></td>";
-    statnum++;
-    if (statnum===5) { statusmod += "</tr>"; }
-  }
-  statusmod += "</table><h3 style='text-align:center'>Abilities</h3><br /><table cellpadding='0' cellspacing='4' border='0'>";
-  statnum = 0;
-  for (let status in abilities) {
-    statnum++;
-    if (statnum===6) { statnum=1; }
-    if (statnum===1) { statusmod += "<tr>"; }
-    statusmod += `<td onclick="SelectStatus('${status}')" style="text-align:center;vertical-align:top"><img src="${abilities[status]}" width="32" /><br />${status}</td>`;
-    if (statnum===5) { statusmod += "</tr>";}
-  }
-  while (statnum < 5) {
-    statusmod += "<td></td>";
-    statnum++;
-    if (statnum===5) { statusmod += "</tr>"; }
-  }
-  statusmod += "</table><h3 style='text-align:center'>Spells</h3><br /><table cellpadding='0' cellspacing='4' border='0'>";
-  statnum = 0;
-  for (let status in spells) {
-    statnum++;
-    if (statnum===6) { statnum=1; }
-    if (statnum===1) { statusmod += "<tr>"; }
-    statusmod += `<td onclick="SelectStatus('${status}')" style="text-align:center;vertical-align:top"><img src="${spells[status]}" width="32" /><br />${status}</td>`;
-    if (statnum===5) { statusmod += "</tr>";}
-  }
-  while (statnum < 5) {
-    statusmod += "<td></td>";
-    statnum++;
-    if (statnum===5) { statusmod += "</tr>"; }
-  }
-  statusmod += `</table></form><br /><input type="button" value="Cancel" onClick="CancelStatus();" />`
+  MakeConditionTable(statuses);
+  statusmod += "<h3 style='text-align:center'>Abilities</h3><br /><table cellpadding='0' cellspacing='4' border='0'>";
+  MakeConditionTable(abilities);
+  MakeConditionTable(userabilties);
+  statusmod += "<h3 style='text-align:center'>Spells</h3><br /><table cellpadding='0' cellspacing='4' border='0'>";
+  MakeConditionTable(spells);
+  MakeConditionTable(userspells);
+  statusmod += `</form><br /><input type="button" value="Submit" onClick="PerformEditStatusList();" />`
   document.getElementById('controlwindow').innerHTML = statusmod;
+}
+
+function MakeConditionTable(source) {
+  let statnum = 0;
+  for (let status in source) {
+    statnum++;
+    if (statnum===6) { statnum=1; }
+    if (statnum===1) { statusmod += "<tr>"; }
+    let img = FindStatusByName(status);
+    statusmod += `<td style="text-align:center;vertical-align:top"><img src="${img}" width="32" /><br />${status}<br /><input type="checkbox" name="chk_${status}" id="chk_${status}" `;
+    if (FindStatusByName(status,"enabled")) { statusmod += "checked "; }    
+    statusmod += `/></td>`;
+    if (statnum===5) { statusmod += "</tr>";}
+  }
+  while (statnum < 5) {
+    statusmod += "<td></td>";
+    statnum++;
+    if (statnum===5) { statusmod += "</tr>"; }
+  }
+  statusmod += "</table>";
+  return statusmod;
 }
 
 function CancelStatus(redraw) {
