@@ -128,11 +128,11 @@ function EditStatusLists() {
   statusmod += "<h3 style='text-align:center'>Abilities</h3><br /><table cellpadding='0' cellspacing='4' border='0'>";
   statusmod += MakeConditionTable(abilities);
   statusmod += MakeConditionTable(userabilities);
-  statusmod += `<input type="button" value="Add Ability" onClick="PerformAddStatus('ability')" /><br />`;
+  statusmod += `<input type="button" value="Add Ability" onClick="PerformAddStatus('Ability')" /><br />`;
   statusmod += "<h3 style='text-align:center'>Spells</h3><br /><table cellpadding='0' cellspacing='4' border='0'>";
   statusmod += MakeConditionTable(spells);
   statusmod += MakeConditionTable(userspells);
-  statusmod += `</form><input type="button" value="Add Spell" onClick="PerformAddStatus('spell')" /><br /><input type="button" value="Submit" onClick="PerformEditStatusList();" />`
+  statusmod += `</form><input type="button" value="Add Spell" onClick="PerformAddStatus('Spell')" /><br /><input type="button" value="Submit" onClick="PerformEditStatusList();" />`
   document.getElementById('controlwindow').innerHTML = statusmod;
 }
 
@@ -165,6 +165,24 @@ function MakeConditionTable(source) {
 function DeleteCondition(st,sta) {
   delete sta[st];
 }
+
+function PerformAddStatus(stattype) {
+  dialog.showOpenDialog({ properties: ['openFile'], function (fileNames) {
+    if (fileNames === undefined) return;
+
+    let fileName = fileNames[0];
+    fileName = fileName.replace(/\\/g,"/");
+    let htmlpage = `<div style='text-align:center'><img src='${filename}' width='64' /><br />
+    <form id='addstatdetails' name='addstatdetails'>Name: <input type='text' name='addstatname' id='addstatname' /> <br />
+    <select name='addstattype' id='addstattype'><option id='Ability' value='Ability'>Ability</option><option id='Spell' value="Spell">Spell</option></select><br />
+    <input type='text' name='addstatdesc' id='addstatdesc' size='40' /><br />
+    <input type='button' name='addstatsubmit' id='addstatsubmit' value='Submit' onClick='SubmitAddStatus()' /></form></div>`;
+    document.getElementById(stattype).selected = true;    
+    
+    }
+  });
+}
+
 function CancelStatus(redraw) {
   document.getElementById('statuses').style.display = "none";
   if (redraw) { drawTable(); }
