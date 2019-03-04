@@ -253,5 +253,5 @@ function SubmitAddStatus(filename) {
   let st = new condition(filename, document.getElementById('addstatdesc').value);
   if (document.getElementById('Ability').selected) { userabilities[document.getElementById('addstatname').value] = st; }
   else { userspells[document.getElementById('addstatname').value] = st; }  
-  
+  EditStatusLists();
 }
