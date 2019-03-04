@@ -9,6 +9,8 @@ let abilitiesmask = {};
 let userspells = {};
 let spellsmask = {};
 
+let tmpcond = {};
+
 class condition {
   constructor(filepath, desc) {
     this.filepath = filepath;
@@ -221,7 +223,11 @@ function DeleteCondition(st,sta) {
 }
 
 function PerformAddStatus(stattype) {
-  dialog.showOpenDialog({ properties: ['openFile'], function (fileNames) {
+  
+}
+
+function tmp(){
+    dialog.showOpenDialog({ properties: ['openFile'], function (fileNames) {
     if (fileNames === undefined) return;
 
     let fileName = fileNames[0];
@@ -231,10 +237,9 @@ function PerformAddStatus(stattype) {
     <select name='addstattype' id='addstattype'><option id='Ability' value='Ability'>Ability</option><option id='Spell' value="Spell">Spell</option></select><br />
     <input type='text' name='addstatdesc' id='addstatdesc' size='40' /><br />
     <input type='button' name='addstatsubmit' id='addstatsubmit' value='Submit' onClick='SubmitAddStatus(${filename})' /></form><br /><div id='errorsgohere' style='text-align:center;color:red'></div></div>`;
-    document.getElementById(stattype).selected = true;    
 
     document.getElementById('controlwindow').innerHTML = htmlpage;
-    
+    document.getElementById(stattype).selected = true;    
     }
   });
 }
