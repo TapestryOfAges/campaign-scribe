@@ -121,6 +121,58 @@ function SetUpStatuses() {
   document.getElementById('statuses').innerHTML = statusmod;
 }
 
+
+function CancelStatus(redraw) {
+  document.getElementById('statuses').style.display = "none";
+  if (redraw) { drawTable(); }
+}
+
+function SelectStatus(ss) {
+  for (let i=0;i<selectedentity.status_effects.length;i++) {
+    if (selectedentity.status_effects[i] === ss) { CancelStatus(); return; }
+  }
+  selectedentity.status_effects[selectedentity.status_effects.length] = ss;
+  CancelStatus(1);
+  return;
+}
+
+function addStat(whoname, whoid) {
+  selectedentity = findEntityByName(whoname, whoid);
+  document.getElementById('statuses').style.display = "block";
+}
+
+function removeStat(whoname, whoid, statindex) {
+  let who = findEntityByName(whoname, whoid);
+  who.status_effects.splice(statindex,1);
+  drawTable();
+}
+
+function FindStatusByName(name, field) {
+  if (!field) { field = "filepath"; }
+  let gotstat = null;
+  for (let i in statuses) {
+    if (i === name) { gotstat = statuses[i]; }
+  }
+  for (let i in abilities) {
+    if (i === name) { gotstat = abilities[i]; }
+  }
+  for (let i in userabilities) {
+    if (i === name) { gotstat = userabilities[i]; }
+  }
+  for (let i in spells) {
+    if (i === name) { gotstat = spells[i]; }
+  }
+  for (let i in userspells) {
+    if (i === name) { gotstat = userspells[i]; }
+  }
+//  if (field === "filepath") { 
+//    let statpath = gotstat[field];
+//    statpath = statpath.replace("'","\\'");
+//    return statpath;
+//  }
+  return gotstat[field];
+}
+
 function EditStatusLists() { 
   let statusmod = "<form id='stats'>";
   statusmod = "<h3 style='text-align:center'>Statuses</h3><br /><table cellpadding='0' cellspacing='4' border='0'>";
@@ -144,7 +196,9 @@ function MakeConditionTable(source) {
     if (statnum===10) { statnum=1; }
     if (statnum===1) { statusmod += "<tr>"; }
     let img = FindStatusByName(status);
-    statusmod += `<td style="text-align:center;vertical-align:top"><img src="${img}" width="32" /><br />${status}<br /><input type="checkbox" name="chk_${status}" id="chk_${status}" `;
+    statusmod += `<td style="text-align:center;vertical-align:top"><img src="${img}" width="32"`;
+    if (!FindStatusByName(status,"enabled")) { statusmod += "style='opacity:.6' "; }
+    statusmod += `/><br />${status}<br /><input type="checkbox" name="chk_${status}" id="chk_${status}" `;
     if (FindStatusByName(status,"enabled")) { statusmod += "checked "; }    
     statusmod += `/>`;
     if ((source === "userabilities") || (source === "userspells")) {
@@ -176,64 +230,28 @@ function PerformAddStatus(stattype) {
     <form id='addstatdetails' name='addstatdetails'>Name: <input type='text' name='addstatname' id='addstatname' /> <br />
     <select name='addstattype' id='addstattype'><option id='Ability' value='Ability'>Ability</option><option id='Spell' value="Spell">Spell</option></select><br />
     <input type='text' name='addstatdesc' id='addstatdesc' size='40' /><br />
-    <input type='button' name='addstatsubmit' id='addstatsubmit' value='Submit' onClick='SubmitAddStatus()' /></form></div>`;
+    <input type='button' name='addstatsubmit' id='addstatsubmit' value='Submit' onClick='SubmitAddStatus(${filename})' /></form><br /><div id='errorsgohere' style='text-align:center;color:red'></div></div>`;
     document.getElementById(stattype).selected = true;    
+
+    document.getElementById('controlwindow').innerHTML = htmlpage;
     
     }
   });
 }
 
-function CancelStatus(redraw) {
-  document.getElementById('statuses').style.display = "none";
-  if (redraw) { drawTable(); }
-}
-
-function SelectStatus(ss) {
-  for (let i=0;i<selectedentity.status_effects.length;i++) {
-    if (selectedentity.status_effects[i] === ss) { CancelStatus(); return; }
+function SubmitAddStatus(filename) {
+  document.getElementById('addstatname').value = document.getElementById('addstatname').value.replace(/^\s+/,"");
+  document.getElementById('addstatname').value = document.getElementById('addstatname').value.replace(/\s+$/,"");
+  if (document.getElementById('addstatname').value === "") {
+    document.getElementById('errorsgohere').innerHTML = "Condition needs a name.";
+    return;
   }
-  selectedentity.status_effects[selectedentity.status_effects.length] = ss;
-  CancelStatus(1);
-  return;
-}
-
-function addStat(whoname, whoid) {
-  selectedentity = findEntityByName(whoname, whoid);
-  document.getElementById('statuses').style.display = "block";
-}
-
-function removeStat(whoname, whoid, statindex) {
-  let who = findEntityByName(whoname, whoid);
-  who.status_effects.splice(statindex,1);
-  drawTable();
-}
-
-function edit_status() {
+  if (FindStatusByName(document.getElementById('addstatname').value)) {
+    document.getElementById('errorsgohere').innerHTML = "That name is already in use.";
+    return;
+  }
+  let st = new condition(filename, document.getElementById('addstatdesc').value);
+  if (document.getElementById('Ability').selected) { userabilities[document.getElementById('addstatname').value] = st; }
+  else { userspells[document.getElementById('addstatname').value] = st; }  
   
-}
-
-function FindStatusByName(name, field) {
-  if (!field) { field = "filepath"; }
-  let gotstat = null;
-  for (let i in statuses) {
-    if (i === name) { gotstat = statuses[i]; }
-  }
-  for (let i in abilities) {
-    if (i === name) { gotstat = abilities[i]; }
-  }
-  for (let i in userabilities) {
-    if (i === name) { gotstat = userabilities[i]; }
-  }
-  for (let i in spells) {
-    if (i === name) { gotstat = spells[i]; }
-  }
-  for (let i in userspells) {
-    if (i === name) { gotstat = userspells[i]; }
-  }
-//  if (field === "filepath") { 
-//    let statpath = gotstat[field];
-//    statpath = statpath.replace("'","\\'");
-//    return statpath;
-//  }
-  return gotstat[field];
 }
