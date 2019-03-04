@@ -898,6 +898,7 @@ function editGroupMember(which) {
   else { newscreen += "<option value='enemy'>Enemy</option>"; }
   newscreen += "</select><br />";
   newscreen += "Quant: <input name='formquant' type='text' size='2' /><br />";
+  newscreen += "<input type='hidden' id='iconpath' value="+icon+" />"
   newscreen += "<input type='button' onClick='submitGroupMember("+which+")' value='Submit' /> <input type='button' onClick='editGroup2(\""+currently_editing+"\")' value='Cancel' /></td>";
   newscreen += "<td style='vertical-align:top'>Change icon:<div id='icontd'>";
   newscreen += MakeIconPane('changeMemberIcon');
@@ -913,6 +914,7 @@ function modEditMod(how) {
 
 function changeMemberIcon(idx) {
   document.getElementById('entityicon').src="../icons/"+idx;
+  document.getElementById('iconpath').value=idx;
 }
 
 function submitGroupMember(which) {
@@ -921,8 +923,8 @@ function submitGroupMember(which) {
   if (parseInt(theform.formquant.value) && (which === -1)) { q = parseInt(theform.formquant.value); }
   for (let i=1;i<=q;i++) {
     let newmember = new Entity;
-    newmember.icon = document.getElementById('entityicon').src;
-    newmember.icon = newmember.icon.replace(/^.*\//, "");
+    newmember.icon = document.getElementById('iconpath').value;
+//    newmember.icon = newmember.icon.replace(/^.*\//, "");
   
     newmember.name = theform.formname.value;
     newmember.initmod = theform.forminit.value;
