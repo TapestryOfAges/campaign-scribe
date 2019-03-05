@@ -172,7 +172,11 @@ function FindStatusByName(name, field) {
 //    statpath = statpath.replace("'","\\'");
 //    return statpath;
 //  }
-  return gotstat[field];
+  if (gotstat) {
+    return gotstat[field];
+  } else {
+    return null;
+  }
 }
 
 function EditStatusLists() { 
@@ -223,28 +227,36 @@ function DeleteCondition(st,sta) {
 }
 
 function PerformAddStatus(stattype) {
-  
+  let htmlpage = `<div style='text-align:center'><img src='../ui/noimg.png' width='64' id='statimg' onclick='PickStatImage()' /><br />
+  <form id='addstatdetails' name='addstatdetails'>Name: <input type='text' name='addstatname' id='addstatname' /> <br />
+  <select name='addstattype' id='addstattype'><option id='Ability' value='Ability'>Ability</option><option id='Spell' value="Spell">Spell</option></select><br />
+  <input type='text' name='addstatdesc' id='addstatdesc' size='40' /><br />
+  <input type='button' name='addstatsubmit' id='addstatsubmit' value='Submit' onClick='SubmitAddStatus()' /></form><br /><div id='errorsgohere' style='text-align:center;color:red'></div></div>`;
+
+  document.getElementById('controlwindow').innerHTML = htmlpage;
+  document.getElementById(stattype).selected = true;    
+
 }
 
-function tmp(){
-    dialog.showOpenDialog({ properties: ['openFile'], function (fileNames) {
+function PickStatImage(){
+  dialog.showOpenDialog({ properties: ['openFile']}, function (fileNames) {
     if (fileNames === undefined) return;
 
     let fileName = fileNames[0];
     fileName = fileName.replace(/\\/g,"/");
-    let htmlpage = `<div style='text-align:center'><img src='${filename}' width='64' /><br />
-    <form id='addstatdetails' name='addstatdetails'>Name: <input type='text' name='addstatname' id='addstatname' /> <br />
-    <select name='addstattype' id='addstattype'><option id='Ability' value='Ability'>Ability</option><option id='Spell' value="Spell">Spell</option></select><br />
-    <input type='text' name='addstatdesc' id='addstatdesc' size='40' /><br />
-    <input type='button' name='addstatsubmit' id='addstatsubmit' value='Submit' onClick='SubmitAddStatus(${filename})' /></form><br /><div id='errorsgohere' style='text-align:center;color:red'></div></div>`;
+    document.getElementById('statimg').src = fileName;
 
-    document.getElementById('controlwindow').innerHTML = htmlpage;
-    document.getElementById(stattype).selected = true;    
-    }
+    
   });
 }
 
-function SubmitAddStatus(filename) {
+function SubmitAddStatus() {
+  let filename = document.getElementById('statimg').src;
+  filename = filename.replace(/.*\/ui\//,"");
+  if (filename === "noimg.png") {
+    document.getElementById('errorsgohere').innerHTML = "Please select an image.";
+    return;
+  }
   document.getElementById('addstatname').value = document.getElementById('addstatname').value.replace(/^\s+/,"");
   document.getElementById('addstatname').value = document.getElementById('addstatname').value.replace(/\s+$/,"");
   if (document.getElementById('addstatname').value === "") {

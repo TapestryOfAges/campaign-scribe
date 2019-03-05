@@ -144,9 +144,9 @@ function load_campaign() {
       myprefs = dataset.myprefs;
       locations = dataset.locations;
       soundtrack = dataset.soundtrack;
-      userabilities = dataset.userabilities;
+      userabilities = dataset.abilities;
       abilitiesmask = dataset.abilitiesmask
-      userspells = dataset.userspells;
+      userspells = dataset.spells;
       spellsmask = dataset.spellsmask;
     });
 
