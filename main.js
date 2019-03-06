@@ -179,6 +179,10 @@ ipcMain.on('init_table', function(event, table) {
   mainWindow.webContents.send('init_table',table);
 });
 
+ipcMain.on('statblock', function(event, table) {
+  mainWindow.webContents.send('statblock',table);
+});
+
 ipcMain.on('run_game', function() {
   mainWindow = new BrowserWindow({
     height: 800,

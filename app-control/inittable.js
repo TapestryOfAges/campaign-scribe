@@ -140,7 +140,6 @@ function make_row(person) {
 	let stat2 = "";
   for (let i=0;i<person.status_effects.length;i++) {
 		let st = encodeURI(FindStatusByName(person.status_effects[i]));
-		console.log(st);
 		
     let statdesc = FindStatusByName(person.status_effects[i], "desc");
     stat2 += `<img src="${st}" onClick='removeStat("${person.name}", "${person.index}", ${i})' class='statuseffect' title="${statdesc}" />`;
@@ -310,7 +309,6 @@ function clear_combatants() {
 }
 
 function set_active_row(rowid,color) {
-	console.log(rowid);
 	document.getElementById(rowid).style.backgroundColor = color;
 	if (myprefs.boldtext == 1) { 
 		document.getElementById(rowid).style.fontWeight = "bold";
@@ -565,3 +563,17 @@ function removeStatus(name, index, status) {
   drawTable();
 }
 
+function CreateStatBlock() {
+	let per = combatants[current_turn];
+	let statblock = `<table cellpadding='0' cellspacing='2' border='1' id='statblocktable'><tr><td style="text-align:center" colspan='2'>${per["displayname"]}</td></tr>
+	<tr><td colspan='2' style='text-align:center'><img src='${per["icon"]}'  width='64' /></td></tr>`;
+	console.log(per);
+	for (let i=0;i<per.status_effects.length;i++) {
+		let st = encodeURI(FindStatusByName(per.status_effects[i]));
+			
+		let statdesc = FindStatusByName(per.status_effects[i], "desc");
+		statblock += `<tr><td><img src="${st}" class='statuseffect' /></td><td>${statdesc}</td></tr>`;			
+	}
+	statblock += `</table>`;
+	return statblock;
+}

@@ -19,7 +19,6 @@ ipcRenderer.on('reset_size', function(event) {
 });
 
 ipcRenderer.on('init_table', function(event, inittable) {
-  console.log(inittable);
   if (inittable) {
     document.getElementById('initiative').innerHTML = `<center>${inittable}</center>`;
     document.getElementById('inittable').style.fontSize = "x-large";
@@ -34,5 +33,14 @@ ipcRenderer.on('set_round', function(event, roundnum) {
     document.getElementById('round_number').style.backgroundColor = "white";
   } else {
     document.getElementById('round_number').innerHTML = "";
+  }
+});
+
+ipcRenderer.on('statblock', function(event, stats) {
+  if (stats) {
+    document.getElementById('statblock').innerHTML = `${stats}`;
+    document.getElementById('statblocktable').style.fontSize = "large";
+  } else {
+    document.getElementById('statblock').innerHTML = "";
   }
 });

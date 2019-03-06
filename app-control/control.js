@@ -1185,9 +1185,11 @@ function update_soundtrack(newloc) {
 function update_display() {
   if (state === "combat") {
     ipcRenderer.send('init_table', document.getElementById('initiative').innerHTML);
+    ipcRenderer.send('statblock', CreateStatBlock());
     ipcRenderer.send('set_round', round);
   } else {
     ipcRenderer.send('init_table', "");
+    ipcRenderer.send('statblock', "");
     ipcRenderer.send('set_round', 0);
   }
 }
