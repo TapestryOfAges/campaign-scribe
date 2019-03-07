@@ -38,7 +38,7 @@ statuses["Unconscious"] = new condition("../statuseffects/unconscious.png", "Inc
 statuses["Dying"] = new condition("../statuseffects/dying.png", "Must make death saves."); 
 statuses["Concentrating"] = new condition("../statuseffects/concentrating.png", "Con save to preserve concentration."); 
 
-abilities["Ancestral Protectors"] = new condition("../statuseffects/ancestral_protectors.png", "Atks have disadv unless against barb. Targets other than barb hit resistance that damage.");
+abilities["Ancestral Protectors"] = new condition("../statuseffects/ancestral_protectors.png", "Atks have disadv unless against barb. Targets other than barb hit resist that damage.");
 abilities["Flames of Phlegethos"] = new condition("../statuseffects/flames_of_phlegethos.png", "Creatures that hit from <=5' take 1d4 fire.");
 abilities["Raging"] = new condition("../statuseffects/raging.png", "Adv on Str chks/saves. Str melee atks gain dmg. Resist BPS.");
 abilities["Reckless Attack"] = new condition("../statuseffects/reckless_attack.png", "Adv on Str melee atks. Atks targetting gain Adv.");
@@ -185,10 +185,12 @@ function EditStatusLists() {
   statusmod += MakeConditionTable(statuses);
   statusmod += "<h3 style='text-align:center'>Abilities</h3><br /><table cellpadding='0' cellspacing='4' border='0'>";
   statusmod += MakeConditionTable(abilities);
+  statusmod += `<table cellpadding='0' cellspacing='4' border='0'>`;
   statusmod += MakeConditionTable(userabilities);
   statusmod += `<input type="button" value="Add Ability" onClick="PerformAddStatus('Ability')" /><br />`;
   statusmod += "<h3 style='text-align:center'>Spells</h3><br /><table cellpadding='0' cellspacing='4' border='0'>";
   statusmod += MakeConditionTable(spells);
+  statusmod += `<table cellpadding='0' cellspacing='4' border='0'>`;
   statusmod += MakeConditionTable(userspells);
   statusmod += `</form><input type="button" value="Add Spell" onClick="PerformAddStatus('Spell')" /><br /><input type="button" value="Submit" onClick="PerformEditStatusList();" />`
   document.getElementById('controlwindow').innerHTML = statusmod;
