@@ -53,3 +53,169 @@ function ShowWeatherPatterns() {
   `;
   document.getElementById('weatherpane').innerHTML = table;
 }
+
+function CreateWeathervane() {
+  let html = `<p>Select climate: <select id='climateselect' name='climateselect'>
+    <option value='cool and rainy'>Cool &amp; Rainy</option>
+    <option value='cool with dry winter'>Cool with Dry Winter</option>
+    <option value='desert'>Desert</option>
+    <option value='equatorial'>Equatorial</option>
+    <option value='monsoon'>Monsoon</option>
+    <option value='polar'>Polar</option>
+    <option value='steppes'>Steppes</option>
+    <option value='tropical savanna'>Tropical Savanna</option>
+    <option value='tundra'>Tundra</option>
+    <option value='warm and rainy'>Warm &amp; Rainy</option>
+    <option value='warm with dry summer'>Warm with Dry Summer</option>
+    <option value='warm with dry winter'>Warm with Dry Winter</option>
+    </select><br />
+    Hemisphere: <select id='hemisphereselect' name='hemisphereselect'><option value='n'>North</option><option value='s'>South</option></select><br />
+    Month-equivalent: <select id="monthselect" name="monthselect">
+    <option value=1>January</option>
+    <option value=2>February</option>
+    <option value=3>March</option>
+    <option value=4>April</option>
+    <option value=5>May</option>
+    <option value=6>June</option>
+    <option value=7>July</option>
+    <option value=8>August</option>
+    <option value=9>September</option>
+    <option value=10>October</option>
+    <option value=11>November</option>
+    <option value=12>December</option>
+    </select><br />
+    <input type="button" onclick="CreateWeather()" /></p>`;
+
+  document.getElementById('weathercontrol').innerHTML = html;
+} 
+
+function CreateWeather() {
+  let climatesel = document.getElementById('climateselect');
+  let climate = climatesel[climatesel.selectedIndex].value;
+  let hemisel = document.getElementById('hemisphereselect');
+  let hemi = hemisel[hemisel.selectedIndex].value;
+  let monthsel = document.getElementById('monthselect');
+  let month = monthsel[monthsel.selectedIndex].value;
+
+  let mintemp;
+  let maxtemp;
+  let tempdesc;
+  let winds;
+  let rain = 0;
+
+  if ((climate === "cool and rainy") || (climate === "cool with dry winter")) {
+    if ( (((month >=7) && (month) <=9) && (hemi === "N")) || (((month >=1) && (month) <=3) && (hemi === "S")) ) { 
+      // summer
+      let roll = Math.floor(Math.random() * 100) + 1;
+      if (roll <= 5) {
+        mintemp = 60;
+        maxtemp = 60;
+      } else if (roll <= 50) {
+        mintemp = 65;
+        maxtemp = 70;
+      } else if (roll <= 95) {
+        mintemp = 70;
+        maxtemp = 75;
+      } else {
+        mintemp = 85;
+        maxtemp = 85;
+      }
+    } else if ( ((month === 10) && (hemi === "N")) || ((month === 4) && (hemi === "S")) || ((month >= 3) && (month <= 6) && (hemi === "N")) || ((month >= 9) && (month <= 12) && (hemi ==="S")) ) {
+      // spring/fall
+      let roll = Math.floor(Math.random() * 100) + 1;
+      if (roll <= 5) {
+        mintemp = 35;
+        maxtemp = 35;
+      } else if (roll <= 50) {
+        mintemp = 40;
+        maxtemp = 50;
+      } else if (roll <= 95) {
+        mintemp = 50;
+        maxtemp = 60;
+      } else {
+        mintemp = 65;
+        maxtemp = 65;
+      }
+    } else {
+      // winter
+      let roll = Math.floor(Math.random() * 100) + 1;
+      if (roll <= 5) {
+        mintemp = 5;
+        maxtemp = 5;
+      } else if (roll <= 50) {
+        mintemp = 15;
+        maxtemp = 25;
+      } else if (roll <= 95) {
+        mintemp = 25;
+        maxtemp = 32;
+      } else {
+        mintemp = 40;
+        maxtemp = 40;
+      }
+    }
+    roll = Math.floor(Math.random() * 100) + 1;
+    if ((roll <= 35) && (climate === "cool and rainy")) {
+      rain = 1;
+    } else if ( (roll <= 35) && (((month >= 7) && (month <= 9) && (hemi === "N")) || ((month <= 3) && (hemi === "S"))) ) {
+      rain = 1;
+    } else if ( (roll <= 10) && (((month >= 5) && (month <= 10) && (hemi === "S")) || (((month <= 5) || (month >= 11)) && (hemi === "N"))) ) {
+      rain = 1;
+    } else if (roll <= 20) {
+      rain = 1;
+    }
+  } else if (climate === "desert") {
+    if ( (((month ===1) || (month === 12)) && (hemi ==="N")) || ((month >= 5) && (month <= 6) && (hemi === "S")) ) {
+      // winter
+      let roll = Math.floor(Math.random() * 100) + 1;
+      if (roll <= 5) {
+        mintemp = 55;
+        maxtemp = 55;
+      } else if (roll <= 95) {
+        mintemp = 65;
+        maxtemp = 65;
+      } else {
+        mintemp = 70;
+        maxtemp = 70;
+      }
+    } else {
+      // fall/spring/summer
+      let roll = Math.floor(Math.random() * 100) + 1;
+      if (roll <= 5) {
+        mintemp = 65;
+        maxtemp = 65;
+      } else if (roll <= 95) {
+        mintemp = 70;
+        maxtemp = 90;
+      } else {
+        mintemp = 110;
+        maxtemp = 110;
+      }
+    }
+    roll = Math.floor(Math.random() * 100) + 1;
+    if (roll <= 5) {
+      rain = 1;
+    }
+  } else if (climate ==="equatorial") {
+    // year-round
+    let roll = Math.floor(Math.random() * 100) + 1;
+    if (roll <= 5) {
+      mintemp = 60;
+      maxtemp = 60;
+    } else if (roll <= 95) {
+      mintemp = 70;
+      maxtemp = 85;
+    } else {
+      mintemp = 100;
+      maxtemp = 100;
+    }
+
+    roll = Math.floor(Math.random() * 100) + 1;
+    if ((roll <= 50) && (month >= 3) && (month <=5)) {
+      rain = 1;
+    } else if ((roll <= 40) && (month >= 6)) { 
+      rain = 1;
+    } else if ((roll <= 30) && (month <= 2)) { 
+      rain = 1;
+    }
+  }
+}
