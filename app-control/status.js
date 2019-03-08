@@ -44,6 +44,7 @@ abilities["Raging"] = new condition("../statuseffects/raging.png", "Adv on Str c
 abilities["Reckless Attack"] = new condition("../statuseffects/reckless_attack.png", "Adv on Str melee atks. Atks targetting gain Adv.");
 
 spells["Absorb Elements"] = new condition("../statuseffects/absorb_elements.png", "Resist dmg type until turn start. First time you hit with melee on next turn, add Ld6 dmg of Type.");
+spells["Blade Ward"] = new condition("../statuseffects/blade_ward.png", "Until next turn, resist bludgeoning/slashing/piercing from wpn atks.");
 spells["Dragon's Breath"] = new condition("../statuseffects/dragon's_breath.png", "Can breathe Type in 15' cone. Deals (2+L)d6 Type damage, Dex save half.");
 spells["Faerie Fire"] = new condition("../statuseffects/faerie_fire.png", "Atk targetting have Adv. Cannot be Invisible.");
 spells["Frostbite"] = new condition("../statuseffects/frostbite.png", "Disadv on next wpn atk before end of next turn.");
