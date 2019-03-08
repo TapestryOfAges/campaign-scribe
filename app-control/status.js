@@ -183,21 +183,21 @@ function FindStatusByName(name, field) {
 function EditStatusLists() { 
   let statusmod = "<form id='stats'>";
   statusmod = "<h3 style='text-align:center'>Statuses</h3><br /><table cellpadding='0' cellspacing='4' border='0'>";
-  statusmod += MakeConditionTable(statuses);
+  statusmod += MakeConditionTable(statuses, "statuses");
   statusmod += "<h3 style='text-align:center'>Abilities</h3><br /><table cellpadding='0' cellspacing='4' border='0'>";
-  statusmod += MakeConditionTable(abilities);
+  statusmod += MakeConditionTable(abilities, "abilities");
   statusmod += `<table cellpadding='0' cellspacing='4' border='0'>`;
-  statusmod += MakeConditionTable(userabilities);
+  statusmod += MakeConditionTable(userabilities, "userabilities");
   statusmod += `<div style='text-align:center'><input type="button" value="Add Ability" onClick="PerformAddStatus('Ability')" /></div><br />`;
   statusmod += "<h3 style='text-align:center'>Spells</h3><br /><table cellpadding='0' cellspacing='4' border='0'>";
-  statusmod += MakeConditionTable(spells);
+  statusmod += MakeConditionTable(spells, "spells");
   statusmod += `<table cellpadding='0' cellspacing='4' border='0'>`;
-  statusmod += MakeConditionTable(userspells);
+  statusmod += MakeConditionTable(userspells, "userspells");
   statusmod += `</form><div style='text-align:center'><input type="button" value="Add Spell" onClick="PerformAddStatus('Spell')" /></div>`
   document.getElementById('controlwindow').innerHTML = statusmod;
 }
 
-function MakeConditionTable(source) {
+function MakeConditionTable(source, srcnm) {
   let statnum = 0;
   let statusmod = "";
   for (let status in source) {
@@ -206,10 +206,10 @@ function MakeConditionTable(source) {
     if (statnum===1) { statusmod += "<tr>"; }
     let img = FindStatusByName(status);
     statusmod += `<td style="text-align:center;vertical-align:top"><img src="${img}" width="32"`;
-    if (!FindStatusByName(status,"enabled")) { statusmod += "style='opacity:.6' "; }
+    if (!FindStatusByName(status,"enabled")) { statusmod += " style='opacity:.6' "; }
     statusmod += `/><br />${status}<br /><input type="checkbox" name="chk_${status}" id="chk_${status}" `;
     if (FindStatusByName(status,"enabled")) { statusmod += "checked "; }    
-    statusmod += ` onClick='toggleEnabled("${source}", "${status})"' />`;
+    statusmod += ` onClick='toggleEnabled("${srcnm}", "${status}")' />`;
     if ((source === "userabilities") || (source === "userspells")) {
       statusmod += ` <img src="../ui/Square-Button-Delete.png" width="16" id='del_${status}' onClick="DeleteCondition(${status},${source})" />`;
     }
@@ -226,11 +226,11 @@ function MakeConditionTable(source) {
 }
 
 function toggleEnabled(source,st) {
-  if (source === "statuses") { statuses[st] = ~ statuses[st]; }
-  else if (source === "abilities") { abilities[st] = ~ abilities[st]; }
-  else if (source === "userabilities") { userabilities[st] = ~ userabilities[st]; }
-  else if (source === "spells") { spells[st] = ~ spells[st]; }
-  else if (source === "userspells") { userspells[st] = ~ userspells[st]; }
+  if (source === "statuses") { if (statuses[st].enabled) { statuses[st].enabled = 0; } else { statuses[st].enabled = 1; } }
+  else if (source === "abilities") { if (abilities[st].enabled) { abilities[st].enabled = 0; } else { abilities[st].enabled = 1; } }
+  else if (source === "userabilities") { if (userabilities[st].enabled) { userabilities[st].enabled = 0; } else { userabilities[st].enabled = 1; } }
+  else if (source === "spells") { if (spells[st].enabled) { spells[st].enabled = 0; } else { spells[st].enabled = 1; } }
+  else if (source === "userspells") { if (userspells[st].enabled) { userspells[st].enabled = 0; } else { userspells[st].enabled = 1; } }
   else { console.log("Bad source."); }
 }
 
