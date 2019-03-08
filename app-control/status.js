@@ -187,12 +187,12 @@ function EditStatusLists() {
   statusmod += MakeConditionTable(abilities);
   statusmod += `<table cellpadding='0' cellspacing='4' border='0'>`;
   statusmod += MakeConditionTable(userabilities);
-  statusmod += `<input type="button" value="Add Ability" onClick="PerformAddStatus('Ability')" /><br />`;
+  statusmod += `<div style='text-align:center'><input type="button" value="Add Ability" onClick="PerformAddStatus('Ability')" /></div><br />`;
   statusmod += "<h3 style='text-align:center'>Spells</h3><br /><table cellpadding='0' cellspacing='4' border='0'>";
   statusmod += MakeConditionTable(spells);
   statusmod += `<table cellpadding='0' cellspacing='4' border='0'>`;
   statusmod += MakeConditionTable(userspells);
-  statusmod += `</form><input type="button" value="Add Spell" onClick="PerformAddStatus('Spell')" /><br /><input type="button" value="Submit" onClick="PerformEditStatusList();" />`
+  statusmod += `</form><div style='text-align:center'><input type="button" value="Add Spell" onClick="PerformAddStatus('Spell')" /></div>`
   document.getElementById('controlwindow').innerHTML = statusmod;
 }
 
@@ -208,7 +208,7 @@ function MakeConditionTable(source) {
     if (!FindStatusByName(status,"enabled")) { statusmod += "style='opacity:.6' "; }
     statusmod += `/><br />${status}<br /><input type="checkbox" name="chk_${status}" id="chk_${status}" `;
     if (FindStatusByName(status,"enabled")) { statusmod += "checked "; }    
-    statusmod += `/>`;
+    statusmod += ` onClick='toggleEnabled("${source}", "${status})"' />`;
     if ((source === "userabilities") || (source === "userspells")) {
       statusmod += ` <img src="../ui/Square-Button-Delete.png" width="16" id='del_${status}' onClick="DeleteCondition(${status},${source})" />`;
     }
@@ -222,6 +222,15 @@ function MakeConditionTable(source) {
   }
   statusmod += "</table>";
   return statusmod;
+}
+
+function toggleEnabled(source,st) {
+  if (source === "statuses") { statuses[st] = ~ statuses[st]; }
+  else if (source === "abilities") { abilities[st] = ~ abilities[st]; }
+  else if (source === "userabilities") { userabilities[st] = ~ userabilities[st]; }
+  else if (source === "spells") { spells[st] = ~ spells[st]; }
+  else if (source === "userspells") { userspells[st] = ~ userspells[st]; }
+  else { console.log("Bad source."); }
 }
 
 function DeleteCondition(st,sta) {
