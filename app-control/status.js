@@ -205,7 +205,7 @@ function MakeConditionTable(source, srcnm) {
     if (statnum===10) { statnum=1; }
     if (statnum===1) { statusmod += "<tr>"; }
     let img = FindStatusByName(status);
-    statusmod += `<td style="text-align:center;vertical-align:top"><img src="${img}" width="32"`;
+    statusmod += `<td style="text-align:center;vertical-align:top"><img id="${status}_img" src="${img}" width="32"`;
     if (!FindStatusByName(status,"enabled")) { statusmod += " style='opacity:.6' "; }
     statusmod += `/><br />${status}<br /><input type="checkbox" name="chk_${status}" id="chk_${status}" `;
     if (FindStatusByName(status,"enabled")) { statusmod += "checked "; }    
@@ -226,11 +226,51 @@ function MakeConditionTable(source, srcnm) {
 }
 
 function toggleEnabled(source,st) {
-  if (source === "statuses") { if (statuses[st].enabled) { statuses[st].enabled = 0; } else { statuses[st].enabled = 1; } }
-  else if (source === "abilities") { if (abilities[st].enabled) { abilities[st].enabled = 0; } else { abilities[st].enabled = 1; } }
-  else if (source === "userabilities") { if (userabilities[st].enabled) { userabilities[st].enabled = 0; } else { userabilities[st].enabled = 1; } }
-  else if (source === "spells") { if (spells[st].enabled) { spells[st].enabled = 0; } else { spells[st].enabled = 1; } }
-  else if (source === "userspells") { if (userspells[st].enabled) { userspells[st].enabled = 0; } else { userspells[st].enabled = 1; } }
+  if (source === "statuses") { 
+    if (statuses[st].enabled) { 
+      statuses[st].enabled = 0; 
+      document.getElementById(st + "_img").style.opacity = .6;
+    } else { 
+      statuses[st].enabled = 1; 
+      document.getElementById(st + "_img").style.opacity = 1;
+    } 
+  }
+  else if (source === "abilities") { 
+    if (abilities[st].enabled) { 
+      abilities[st].enabled = 0; 
+      document.getElementById(st + "_img").style.opacity = .6;
+    } else { 
+      abilities[st].enabled = 1; 
+      document.getElementById(st + "_img").style.opacity = 1;
+    } 
+  }
+  else if (source === "userabilities") { 
+    if (userabilities[st].enabled) { 
+      userabilities[st].enabled = 0; 
+      document.getElementById(st + "_img").style.opacity = .6;
+    } else { 
+      userabilities[st].enabled = 1; 
+      document.getElementById(st + "_img").style.opacity = 0;
+    } 
+  }
+  else if (source === "spells") { 
+    if (spells[st].enabled) { 
+      spells[st].enabled = 0; 
+      document.getElementById(st + "_img").style.opacity = .6;
+    } else { 
+      spells[st].enabled = 1; 
+      document.getElementById(st + "_img").style.opacity = 0;
+    } 
+  }
+  else if (source === "userspells") { 
+    if (userspells[st].enabled) { 
+      userspells[st].enabled = 0; 
+      document.getElementById(st + "_img").style.opacity = .6;
+    } else { 
+      userspells[st].enabled = 1; 
+      document.getElementById(st + "_img").style.opacity = 0;
+    } 
+  }
   else { console.log("Bad source."); }
 }
 
