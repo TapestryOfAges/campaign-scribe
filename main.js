@@ -163,6 +163,10 @@ ipcMain.on('close-window', function() {
   app.quit();
 });
 
+ipcMain.on('musicbox', function(event, song) {
+  mainWindow.webContents.send('musicbox',song);
+});
+
 ipcMain.on('set_round', function(event, rnd) {
   mainWindow.webContents.send('set_round',rnd);
 });

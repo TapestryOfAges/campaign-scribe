@@ -570,9 +570,10 @@ function display_song() {
       let songname = tag.tags.title;
       if (!songname) { songname = song.displayname; }
       if (song.overridename) { songname = song.overridename; }
-      let playpause = "<span id='playbutton'><img src='../ui/Square-Button-Pause.png' width='24' height='24' onClick=\"pause_music('pause')\" /></span> ";
+      let playpause = "<span id='playbutton'><img src='../ui/Square-Button-Pause.png' width='24' height='24' onClick=\"pause_music('pause')\" /></span> <img src='../ui/Square-Button-Forward.png' width='24' height='24' onClick=\"skip_music('')\" />";
       if (currently_playing.paused) { playpause = "<span id='playbutton'><img src='../ui/Square-Button-Play.png' width='24' height='24' onClick=\"pause_music('play')\" /></span> "; }
       document.getElementById("musicbox").innerHTML = playpause + "Now playing: " + album + " - " + songname;
+      ipcRenderer.send('musicbox', "Now playing: " + album + " - " + songname);
     },
     onError: function(error) {
       console.log(':(', error.type, error.info);
@@ -589,8 +590,11 @@ function pause_music(toggle) {
     currently_playing.song.play();
     document.getElementById("playbutton").innerHTML = "<img src='../ui/Square-Button-Pause.png' width='24' height='24' onClick=\"pause_music('pause')\" />";
   }
-
 } 
+
+function skip_music() {
+  PlayNextSong(1);
+}
 
 function next_combat(type) {
   combattype = type;

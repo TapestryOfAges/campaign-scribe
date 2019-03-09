@@ -44,3 +44,7 @@ ipcRenderer.on('statblock', function(event, stats) {
     document.getElementById('statblock').innerHTML = "";
   }
 });
+
+ipcRenderer.on('musicbox', function(event, songdesc) {
+  document.getElementById('musicbox').innerHTML = songdesc;
+});
