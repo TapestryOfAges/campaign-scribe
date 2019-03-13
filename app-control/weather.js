@@ -407,5 +407,55 @@ function CreateWeather() {
     }
     roll = Math.floor(Math.random() * 100) + 1;
     if (roll <= 10) { rain = 1; }
+  } else if (climate === "warm and rainy") {
+    let roll = Math.floor(Math.random() * 100) + 1;
+    if ( ((month >= 6) && (month <= 9) && (hemi === "N")) || (((month === 12) || (month <= 3)) && (month === "S")) ) {
+      // summer
+      if (roll <= 5) {
+        mintemp = 60;
+        maxtemp = 60;
+      } else if (roll <= 50) {
+        mintemp = 65;
+        maxtemp = 70;
+      } else if (roll <= 95) {
+        mintemp = 70;
+        maxtemp = 75;
+      } else {
+        mintemp = 85;
+        maxtemp = 85;
+      }
+    } else if ( ((month === 10) && (hemi === "N")) || ((month >= 3) && (month <= 5) && (hemi === "N")) || ((month === 4) && (hemi === "S")) || ((month >= 9) && (month <= 11) && (hemi === "S")) ) {
+      // spring/fall
+      if (roll <= 5) {
+        mintemp = 40;
+        maxtemp = 40;
+      } else if (roll <= 50) {
+        mintemp = 50;
+        maxtemp = 50;
+      } else if (roll <= 95) {
+        mintemp = 60;
+        maxtemp = 60;
+      } else {
+        mintemp = 65;
+        maxtemp = 65;
+      }
+    } else { 
+      // winter
+      if (roll <= 5) {
+        mintemp = 10;
+        maxtemp = 10;
+      } else if (roll <= 50) {
+        mintemp = 25;
+        maxtemp = 32;
+      } else if (roll <= 95) {
+        mintemp = 33;
+        maxtemp = 45;
+      } else {
+        mintemp = 50;
+        maxtemp = 50;
+      }
+    }
+    roll = Math.floor(Math.random() * 100) + 1;
+    if (roll <= 40) { rain = 1; }
   }
 }
