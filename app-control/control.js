@@ -32,6 +32,8 @@ let current_location;
 let explosion = new Audio("../sounds/exp05.mp3");
 let tmpbackground = "";
 let selectedentity;
+let notes = "";
+let calendar = {};
 
 // editing
 let currently_editing = "";
@@ -148,6 +150,8 @@ function load_campaign() {
       abilitiesmask = dataset.abilitiesmask
       userspells = dataset.spells;
       spellsmask = dataset.spellsmask;
+      notes = dataset.notes;
+      calendar = dataset.calendar;
     });
 
     show_campaign_buttons();
@@ -170,6 +174,8 @@ function save_campaign() {
     campaign.abilitiesmask = abilitiesmask;
     campaign.spells = userspells;
     campaign.spellsmask = spellsmask;
+    campaign.notes = notes;
+    campaign.calendar = calendar;
     fs.writeFile(filename,JSON.stringify(campaign),'utf8', function() {});
   });
 }
@@ -1185,6 +1191,16 @@ function update_soundtrack(newloc) {
   CueNextSong();
   PlayNextSong(1);
 }
+
+function Show_Notes() {
+  let notefield = `<textarea id='notefield' cols='75' rows='25'>${notes}</textarea><br /><input type='button' id='savebutton' value='Save' onClick='SaveNotes()' />`
+  document.getElementById('controlwindow').innerHTML = notefield;
+}
+
+function SaveNotes() {
+  notes = document.getElementById('notefield').value;
+}
+
 
 function update_display() {
   if (state === "combat") {
