@@ -45,19 +45,22 @@ abilities["Reckless Attack"] = new condition("../statuseffects/reckless_attack.p
 
 spells["Absorb Elements"] = new condition("../statuseffects/absorb_elements.png", "Resist dmg type until turn start. First time you hit with melee on next turn, add Ld6 dmg of Type.");
 spells["Blade Ward"] = new condition("../statuseffects/blade_ward.png", "Until next turn, resist bludgeoning/slashing/piercing from wpn atks.");
+spells["Bless"] = new condition("../statuseffects/bless.png", "Add d4 to atks and saves.");
+spells["Blink"] = new condition("../statuseffects/blink.png", "50% go Ethereal at end of each of your turns.");
 spells["Dragon's Breath"] = new condition("../statuseffects/dragon's_breath.png", "Can breathe Type in 15' cone. Deals (2+L)d6 Type damage, Dex save half.");
+spells["Entangle"] = new condition("../statuseffects/entangle.png", "Str save ends. Restrained (Speed 0. Atks have Disadv. Atks targetting have Adv. Disadv on Dex saves.)");
 spells["Faerie Fire"] = new condition("../statuseffects/faerie_fire.png", "Atk targetting have Adv. Cannot be Invisible.");
+spells["Feather Fall"] = new condition("../statuseffects/featherfall.png", "Fall slowly.");
 spells["Frostbite"] = new condition("../statuseffects/frostbite.png", "Disadv on next wpn atk before end of next turn.");
 spells["Guidance"] = new condition("../statuseffects/guidance.png", "May add 1d4 to one AbChk.");
+spells["Haste"] = new condition("../statuseffects/guidance.png", "Speed x2, +2 AC, Adv Dex saves, +1 Action.");
+spells["Levitate"] = new condition("../statuseffects/levitate.png", "Floats.");
 spells["Maximilian's Earthen Grasp"] = new condition("../statuseffects/maximilian's_earthen_grasp.png", "Restrained. (Speed 0. Atks have Disadv. Atks targetting have Adv. Disadv on Dex saves.)");
+spells["Mirror Image"] = new condition("../statuseffects/mirrorimage.png", "Chance atks targetting hit illusory duplicates.");
 spells["Shocking Grasp"] = new condition("../statuseffects/shocking_grasp.png", "Cannot take reactions until start of turn.");
+spells["Slow"] = new condition("../statuseffects/slow.png", "Wis save ends. Speed 1/2, -2 to AC and Dex saves, no reactions, restrictions on actions.");
 // Tmp storage
-//abilities["Bless"] = "r_20.png";
-//spells["Haste"] = "g_14.png";
-//spells["Blink"] = "";
-//spells["Blur"] = "";
 // Fly r_33
-// Entangled r_27
 
 function SetUpStatuses() {
   let statusmod = "<h3 style='text-align:center'>Statuses</h3><p>";
