@@ -203,6 +203,8 @@ function show_campaign_buttons(callbacks) {
     <img src='../ui/combat_sort.png' onClick='sort_combatants()' />
     <img src='../ui/combat_begin_combat.png' onClick='toggle_combat()' />
     </div>
+    <img src='../ui/agone-Notes.png' width='50' class='notepad' onClick='ShowNotes();' />
+    <img src='../ui/hawk88-Calendar-1.png' width='50' class='calendar' onClick='' />
     `;
     menustate = "start";
     if (callbacks && callbacks.length) { 
@@ -1192,7 +1194,7 @@ function update_soundtrack(newloc) {
   PlayNextSong(1);
 }
 
-function Show_Notes() {
+function ShowNotes() {
   let notefield = `<textarea id='notefield' cols='75' rows='25'>${notes}</textarea><br /><input type='button' id='savebutton' value='Save' onClick='SaveNotes()' />`
   document.getElementById('controlwindow').innerHTML = notefield;
 }

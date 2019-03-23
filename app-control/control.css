@@ -157,4 +157,14 @@ div.edit_buttons_out {
     
   }
 
-  
+  img.notepad {
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+  }
+
+  img.calendar {
+    position: absolute;
+    bottom: 5px;
+    left: 60px;
+  }
