@@ -21,7 +21,7 @@ ipcRenderer.on('reset_size', function(event) {
 ipcRenderer.on('init_table', function(event, inittable) {
   if (inittable) {
     document.getElementById('initiative').innerHTML = `<center>${inittable}</center>`;
-    document.getElementById('inittable').style.fontSize = "x-large";
+    document.getElementById('inittable').style.fontSize = "xx-large";
   } else {
     document.getElementById('initiative').innerHTML = "";
   }
@@ -39,7 +39,7 @@ ipcRenderer.on('set_round', function(event, roundnum) {
 ipcRenderer.on('statblock', function(event, stats) {
   if (stats) {
     document.getElementById('statblock').innerHTML = `${stats}`;
-    document.getElementById('statblocktable').style.fontSize = "large";
+    document.getElementById('statblocktable').style.fontSize = "x-large";
   } else {
     document.getElementById('statblock').innerHTML = "";
   }
