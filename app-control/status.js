@@ -49,6 +49,7 @@ spells["Bless"] = new condition("../statuseffects/bless.png", "Add d4 to atks an
 spells["Blink"] = new condition("../statuseffects/blink.png", "50% go Ethereal at end of each of your turns.");
 spells["Dragon's Breath"] = new condition("../statuseffects/dragon's_breath.png", "Can breathe Type in 15' cone. Deals (2+L)d6 Type damage, Dex save half.");
 spells["Entangle"] = new condition("../statuseffects/entangle.png", "Str save ends. Restrained (Speed 0. Atks have Disadv. Atks targetting have Adv. Disadv on Dex saves.)");
+spells["Entangle"] = new condition("../statuseffects/entangle.png", "Incr 1 size cat. Adv on Str chks and saves. +1d4 wpn dmg.");
 spells["Faerie Fire"] = new condition("../statuseffects/faerie_fire.png", "Atk targetting have Adv. Cannot be Invisible.");
 spells["Feather Fall"] = new condition("../statuseffects/featherfall.png", "Fall slowly.");
 spells["Frostbite"] = new condition("../statuseffects/frostbite.png", "Disadv on next wpn atk before end of next turn.");
@@ -57,8 +58,10 @@ spells["Haste"] = new condition("../statuseffects/guidance.png", "Speed x2, +2 A
 spells["Levitate"] = new condition("../statuseffects/levitate.png", "Floats.");
 spells["Maximilian's Earthen Grasp"] = new condition("../statuseffects/maximilian's_earthen_grasp.png", "Restrained. (Speed 0. Atks have Disadv. Atks targetting have Adv. Disadv on Dex saves.)");
 spells["Mirror Image"] = new condition("../statuseffects/mirrorimage.png", "Chance atks targetting hit illusory duplicates.");
+spells["Reduce"] = new condition("../statuseffects/reduce.png", "Reduce 1 size cat. Disad on Str chks and saves. Wpn dmg reduced by 1d4.");
 spells["Shocking Grasp"] = new condition("../statuseffects/shocking_grasp.png", "Cannot take reactions until start of turn.");
 spells["Slow"] = new condition("../statuseffects/slow.png", "Wis save ends. Speed 1/2, -2 to AC and Dex saves, no reactions, restrictions on actions.");
+spells["Web"] = new condition("../statuseffects/web.png", "Str chk ends. Restrained (Speed 0. Atks have Disadv. Atks targetting have Adv. Disadv on Dex saves).");
 // Tmp storage
 // Fly r_33
 
@@ -129,7 +132,8 @@ function SetUpStatuses() {
 
 
 function CancelStatus(redraw) {
-  document.getElementById('statuses').style.display = "none";
+  window.removeEventListener('click', WindowOnclick);
+  document.getElementById('statusmod').style.display = "none";
   if (redraw) { drawTable(); }
 }
 
@@ -144,7 +148,17 @@ function SelectStatus(ss) {
 
 function addStat(whoname, whoid) {
   selectedentity = findEntityByName(whoname, whoid);
-  document.getElementById('statuses').style.display = "block";
+  stt = document.getElementById('statusmod');
+  stt.style.display = "block";
+//  document.getElementById('body').addEventListener('click', function(e) { CancelStatus(); });
+  window.addEventListener('click', WindowOnclick);
+}
+
+function WindowOnclick(e) {
+  console.log(e.target);
+  if (e.target === document.getElementById('statusmod')) { 
+    CancelStatus();
+  }
 }
 
 function removeStat(whoname, whoid, statindex) {
