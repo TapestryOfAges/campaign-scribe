@@ -81,13 +81,28 @@ function ShowCalendar() {
 }
 
 function DisplayCalendar() {
-  let calhtml = `<h3 style='text-align: center'>${monthnames[showmonth]} (${commonmonthnames[showmonth]}): ${showyear}</h3><br /><span style='text-align:center; font-style:italic'>${yearNames[showyear]}</span>`;
-  calhtml += `<table cellpadding='1' cellspacing='0' border='1'>`;
+  let calhtml = `<p style='text-align: center;width:90%'><img src='../ui/Square-Button-Left.png' width='32' onClick='ChangeMonth(-1)' style='float:left' /><img src='../ui/Square-Button-Play.png' width='32' onClick='ChangeMonth(1)' style='float:right' /><span style='font-size:larger;font-weight:bold'>${monthnames[showmonth]} (${commonmonthnames[showmonth]}): ${showyear}</span><br /><span style='font-style:italic'>${yearNames[showyear]}</span></p>`;
+  calhtml += `<table style='width:95%' cellpadding='1' cellspacing='0' border='1'>`;
   for (let i=0;i<=2;i++) {
     calhtml += `<tr>`;
     for (let j=1;j<=10;j++) {
       let day = 10*i+j;
-      calhtml += `<td onClick='expandDay(${day},${showmonth},${showyear})'>${day}<br />${content}</td>
+      let content = "";
+      if (calendar[showyear]) {
+        if (calendar[showyear][showmonth]) {
+          if (calendar[showyear][showmonth][day]){
+            if (calendar[showyear][showmonth][day]["notes"]) { content = "X"; }
+          }
+        }
+      }
+      calhtml += `<td style='width:9%; text-align:center' onClick='ExpandDay(${day},${showmonth},${showyear})'>${day}<br />${content}</td>`
     }
+    calhtml += '</tr>'
   }
+  calhtml += '</table>';
+  document.getElementById('controlwindow').innerHTML = calhtml;
+}
+
+function ExpandDay(day,month,year) {
+
 }
