@@ -1,4 +1,9 @@
 "use strict";
+let calendar = {};
+calendar.currentYear = "1491";
+calendar.currentMonth = "6";
+let showyear;  
+let showmonth;
 
 let moonphases = [];
 // 0 is a leap year
@@ -54,6 +59,9 @@ moonphases[0] = [[0,1,2,2,3,3,4,4,5,6,6,7,7,7,8,8,9,10,10,11,11,12,12,13,14,14,1
   [1,2,2,3,3,4,4,5,6,6,7,7,7,8,8,9,10,10,11,11,12,12,13,14,14,14,15,15,16,16,16,0],
   [1,2,2,3,3,4,4,5,6,6,7,7,8,8,9,10,10,11,11,11,12,12,13,14,14,15,15,15,16,16,0,0]];
 
+let monthnames = ["","Hammer","Alturiak","Ches","Tarsahk","Mirtul","Kythorn","Flamerule","Eleasis","Elient","Marpenoth","Uktar","Nightal"];
+let commonmonthnames = ["","Deepwinter","The Claw of Winter","The Claw of Sunsets","The Claw of Storms","The Melting","The Time of Flowers","Summertide","Highsun","The Fading","Leaffall","The Rotting","The Drawing Down"];
+
 function CheckLeap(year) {
   year = parseInt(year);
   if (Math.round(year/4) === (year/4)) { 
@@ -61,3 +69,25 @@ function CheckLeap(year) {
   }
 }  
 
+function GetMoonPhase(year,month,day) {
+  let yr = year % 4;
+  return moonphases[yr][month][day];
+}
+
+function ShowCalendar() {
+  showmonth = calendar.currentMonth;
+  showyear = calendar.currentYear;
+  DisplayCalendar();
+}
+
+function DisplayCalendar() {
+  let calhtml = `<h3 style='text-align: center'>${monthnames[showmonth]} (${commonmonthnames[showmonth]}): ${showyear}</h3><br /><span style='text-align:center; font-style:italic'>${yearNames[showyear]}</span>`;
+  calhtml += `<table cellpadding='1' cellspacing='0' border='1'>`;
+  for (let i=0;i<=2;i++) {
+    calhtml += `<tr>`;
+    for (let j=1;j<=10;j++) {
+      let day = 10*i+j;
+      calhtml += `<td onClick='expandDay(${day},${showmonth},${showyear})'>${day}<br />${content}</td>
+    }
+  }
+}

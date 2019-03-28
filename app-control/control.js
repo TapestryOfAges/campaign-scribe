@@ -33,7 +33,6 @@ let explosion = new Audio("../sounds/exp05.mp3");
 let tmpbackground = "";
 let selectedentity;
 let notes = "";
-let calendar = {};
 
 // editing
 let currently_editing = "";
@@ -151,7 +150,11 @@ function load_campaign() {
       userspells = dataset.spells;
       spellsmask = dataset.spellsmask;
       notes = dataset.notes;
-      calendar = dataset.calendar;
+      if (dataset.hasOwnProperty("calendar")) {
+        calendar = dataset.calendar;
+      }
+      showyear = calendar.currentYear;
+      showmonth = calendar.currentMonth;
     });
 
     show_campaign_buttons();
@@ -204,7 +207,7 @@ function show_campaign_buttons(callbacks) {
     <img src='../ui/combat_begin_combat.png' onClick='toggle_combat()' />
     </div>
     <img src='../ui/agone-Notes.png' width='50' class='notepad' onClick='ShowNotes();' />
-    <img src='../ui/hawk88-Calendar-1.png' width='50' class='calendar' onClick='' />
+    <img src='../ui/hawk88-Calendar-1.png' width='50' class='calendar' onClick='ShowCalendar()' />
     `;
     menustate = "start";
     if (callbacks && callbacks.length) { 
