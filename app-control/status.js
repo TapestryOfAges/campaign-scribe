@@ -150,7 +150,6 @@ function addStat(whoname, whoid) {
   selectedentity = findEntityByName(whoname, whoid);
   stt = document.getElementById('statusmod');
   stt.style.display = "block";
-//  document.getElementById('body').addEventListener('click', function(e) { CancelStatus(); });
   window.addEventListener('click', WindowOnclick);
 }
 

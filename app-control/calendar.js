@@ -4,6 +4,7 @@ calendar.currentYear = "1491";
 calendar.currentMonth = "6";
 let showyear;  
 let showmonth;
+const maxmonths = 12; // for when I allow custom calendars
 
 let moonphases = [];
 // 0 is a leap year
@@ -101,6 +102,18 @@ function DisplayCalendar() {
   }
   calhtml += '</table>';
   document.getElementById('controlwindow').innerHTML = calhtml;
+}
+
+function ChangeMonth(cv) {
+  showmonth += cv;
+  if (showmonth === 0) {
+    showmonth = maxmonths;
+    showyear--;
+  } else if (showmonth > maxmonths) {
+    showmonth = 1; 
+    showyear++;
+  }
+  DisplayCalendar();
 }
 
 function ExpandDay(day,month,year) {
