@@ -31,6 +31,9 @@ function add_char(char) {
     else {char.setinit = 1; }
   }
 
+	if (char.hitpoints.indexOf("d") !== -1) {
+    char.hitpoints = Dice.roll(char.hitpoints);
+	}
 	char.index = 1;
 	char.initmod = parseInt(char.initmod);
 	set_index(char);

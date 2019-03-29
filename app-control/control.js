@@ -923,8 +923,8 @@ function editGroupMember(which) {
 
 function modEditMod(how) {
   how = parseInt(how);
-  if (!document.groupentity.forminit.value) { document.groupentity.forminit.value = 0; }
-  document.groupentity.forminit.value = parseInt(document.groupentity.forminit.value) + how;
+  if (!document.getElementById("forminit").value) { document.getElementById("forminit").value = 0; }
+  document.getElementById("forminit").value = parseInt(document.getElementById("forminit").value) + how;
 }
 
 function changeMemberIcon(idx) {
@@ -1219,6 +1219,78 @@ function update_display() {
   }
 }
 
+function DiceObject() {
+	
+  this.parse = function(die) {
+    let dieobj = {};
+    if (parseInt(die) == die) {
+      dieobj.plus = parseInt(die);
+      dieobj.quantity = 0;
+      dieobj.dice = 0;
+      return dieobj;
+    }
+    if (/\d+d\d+\-\d+/.test(die)) {
+      die = die.replace(/\-/,'+-');
+    }
+    let tmpobj = [];
+    tmpobj = die.split("+");
+    if (tmpobj[1]){
+      dieobj.plus = parseInt(tmpobj[1]);
+      tmpobj = tmpobj[0].split("d");
+      if (tmpobj[1]) {
+        dieobj.dice = parseInt(tmpobj[1]);
+        dieobj.quantity = parseInt(tmpobj[0]);
+        if (isNaN(dieobj.quantity)) { dieobj.quantity = 1; }
+      } else {
+        dieobj.dice = 1;
+        dieobj.quantity = 0;
+      }
+    } else {
+      dieobj.plus = 0;
+      tmpobj = die.split("d");
+      if (tmpobj[1]) {
+        dieobj.dice = parseInt(tmpobj[1]);
+        dieobj.quantity = parseInt(tmpobj[0]);
+        if (isNaN(dieobj.quantity)) { dieobj.quantity = 1; }
+      } else {
+        dieobj.dice = 1;
+        dieobj.quantity = 0;
+      }
+    }
+
+    return dieobj;		
+	}
+	
+  this.roll = function(die) {
+    let dieobj = this.parse(die);
+    let roll = dieobj.plus;
+    if (dieobj.quantity > 0) {
+      for (let i = 1; i <= dieobj.quantity; i++) {
+        roll += Math.floor(Math.random() * dieobj.dice)+ 1;
+      }
+    }	 
+
+    return roll;  
+  }
+  
+  this.rollmin = function(die) {
+    let dieobj = this.parse(die);
+    return (dieobj.plus + dieobj.quantity);
+  }
+  
+  this.rollave = function(die) {
+    let dieobj = this.parse(die);
+    return (dieobj.plus + dieobj.quantity * (1+dieobj.dice)/2);  
+  }
+
+  this.rollmax = function(die) {
+    let dieobj = this.parse(die);
+    return (dieobj.dice*dieobj.quantity + dieobj.plus);
+  }
+}
+DiceObject.prototype = new Object();
+
+let Dice = new DiceObject();
 // more stackoverflow: http://stackoverflow.com/questions/2450954/how-to-randomize-shuffle-a-javascript-array#
 function ShuffleArray(arr) {
   var currentIndex = arr.length, temporaryValue, randomIndex ;
@@ -1250,4 +1322,5 @@ ipcRenderer.on('save', function(event) {
 ipcRenderer.on('new', function(event) {
   new_campaign();
 });
+
 
