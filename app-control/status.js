@@ -154,7 +154,6 @@ function addStat(whoname, whoid) {
 }
 
 function WindowOnclick(e) {
-  console.log(e.target);
   if (e.target === document.getElementById('statusmod')) { 
     CancelStatus();
   }

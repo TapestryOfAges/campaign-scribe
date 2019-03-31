@@ -117,5 +117,14 @@ function ChangeMonth(cv) {
 }
 
 function ExpandDay(day,month,year) {
+  document.getElementById('othermod').style.display = "block";
+  window.addEventListener('click', WindowOnclickGeneric);
 
+  
+}
+
+function WindowOnclickGeneric(e) {
+  if (e.target === document.getElementById('othermod')) { 
+    CancelStatus();
+  }
 }

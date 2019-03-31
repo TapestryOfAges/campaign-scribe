@@ -31,8 +31,10 @@ function add_char(char) {
     else {char.setinit = 1; }
   }
 
-	if (char.hitpoints.indexOf("d") !== -1) {
-    char.hitpoints = Dice.roll(char.hitpoints);
+	if (char.hasOwnProperty("hitpoints")) {
+  	if (char.hitpoints.indexOf("d") !== -1) {
+			char.hitpoints = Dice.roll(char.hitpoints);
+		}
 	}
 	char.index = 1;
 	char.initmod = parseInt(char.initmod);
@@ -570,7 +572,6 @@ function CreateStatBlock() {
 	let per = combatants[current_turn];
 	let statblock = `<table cellpadding='0' cellspacing='2' border='1' id='statblocktable'><tr><td style="text-align:center" colspan='2'>${per["displayname"]}</td></tr>
 	<tr><td colspan='2' style='text-align:center'><img src='../icons/${per["icon"]}'  width='64' /></td></tr>`;
-	console.log(per);
 	for (let i=0;i<per.status_effects.length;i++) {
 		let st = encodeURI(FindStatusByName(per.status_effects[i]));
 			
