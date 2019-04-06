@@ -179,3 +179,21 @@ div.edit_buttons_out {
     bottom: 5px;
     left: 60px;
   }
+
+  div.statusmodal {
+    position: absolute;
+    left: 400px;
+    top: 50px;
+    width: 400px;
+    height: 400px;
+  }
+  
+  div.calday {
+    border-style: inset;
+    border-width: 3px;
+    border-color: #333333;
+    background-color: #dddddd;
+    height: 400px;
+    width: 400px;
+    overflow-y: scroll;
+  }

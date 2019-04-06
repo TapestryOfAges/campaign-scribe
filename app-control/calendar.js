@@ -120,11 +120,21 @@ function ExpandDay(day,month,year) {
   document.getElementById('othermod').style.display = "block";
   window.addEventListener('click', WindowOnclickGeneric);
 
+  document.getElementById('othermodcontent').innerHTML = `<div class='calday'>
+  <p style='font-weight:bold;font-size: large'>${day} 
+  </div>`;
   
 }
 
 function WindowOnclickGeneric(e) {
   if (e.target === document.getElementById('othermod')) { 
-    CancelStatus();
+    CancelCalendar();
   }
+}
+
+
+function CancelCalendar() {
+  window.removeEventListener('click', WindowOnclickGeneric);
+  document.getElementById('othermod').style.display = "none";
+  document.getElementById('othermodcontent').innerHTML = '';
 }
