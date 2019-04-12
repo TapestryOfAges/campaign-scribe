@@ -120,8 +120,12 @@ function ExpandDay(day,month,year) {
   document.getElementById('othermod').style.display = "block";
   window.addEventListener('click', WindowOnclickGeneric);
 
+  let mp = GetMoonPhase(year,month,day);
+  let wea = ""  // will be weather
+
   document.getElementById('othermodcontent').innerHTML = `<div class='calday'>
-  <p style='font-weight:bold;font-size: large'>${day} 
+  <p style='font-weight:bold;font-size: large'>${day} <img src='../ui/moons/moon_${mp}.jpg' style='float:right' /></p>
+  <textarea name='daynotes' id='daynotes' width='80' height='10'>${calendar[year][month][day]["notes"]}</textarea>
   </div>`;
   
 }

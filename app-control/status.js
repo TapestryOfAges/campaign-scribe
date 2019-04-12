@@ -39,6 +39,7 @@ statuses["Dying"] = new condition("../statuseffects/dying.png", "Must make death
 statuses["Concentrating"] = new condition("../statuseffects/concentrating.png", "Con save to preserve concentration."); 
 
 abilities["Ancestral Protectors"] = new condition("../statuseffects/ancestral_protectors.png", "Atks have disadv unless against barb. Targets other than barb hit resist that damage.");
+abilities["Bardic Inspiration"] = new condition("../statuseffects/bardic_inspiration.png", "Gain bonus die to add to one AbChk, Atk, or Save.");
 abilities["Flames of Phlegethos"] = new condition("../statuseffects/flames_of_phlegethos.png", "Creatures that hit from <=5' take 1d4 fire.");
 abilities["Raging"] = new condition("../statuseffects/raging.png", "Adv on Str chks/saves. Str melee atks gain dmg. Resist BPS.");
 abilities["Reckless Attack"] = new condition("../statuseffects/reckless_attack.png", "Adv on Str melee atks. Atks targetting gain Adv.");
@@ -55,6 +56,7 @@ spells["Feather Fall"] = new condition("../statuseffects/featherfall.png", "Fall
 spells["Frostbite"] = new condition("../statuseffects/frostbite.png", "Disadv on next wpn atk before end of next turn.");
 spells["Guidance"] = new condition("../statuseffects/guidance.png", "May add 1d4 to one AbChk.");
 spells["Haste"] = new condition("../statuseffects/guidance.png", "Speed x2, +2 AC, Adv Dex saves, +1 Action.");
+spells["Heroism"] = new condition("../statuseffects/heroism.png", "Immune to Frightened. Gains MOD tmp hp at start of each turn.");
 spells["Levitate"] = new condition("../statuseffects/levitate.png", "Floats.");
 spells["Maximilian's Earthen Grasp"] = new condition("../statuseffects/maximilian's_earthen_grasp.png", "Restrained. (Speed 0. Atks have Disadv. Atks targetting have Adv. Disadv on Dex saves.)");
 spells["Mirror Image"] = new condition("../statuseffects/mirrorimage.png", "Chance atks targetting hit illusory duplicates.");
