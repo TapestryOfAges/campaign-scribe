@@ -1209,9 +1209,11 @@ function SaveNotes() {
 
 function update_display() {
   if (state === "combat") {
-    ipcRenderer.send('init_table', document.getElementById('initiative').innerHTML);
-    ipcRenderer.send('statblock', CreateStatBlock());
-    ipcRenderer.send('set_round', round);
+    if (document.getElementById('initiative')) {
+      ipcRenderer.send('init_table', document.getElementById('initiative').innerHTML);
+      ipcRenderer.send('statblock', CreateStatBlock());
+      ipcRenderer.send('set_round', round);
+    }
   } else {
     ipcRenderer.send('init_table', "");
     ipcRenderer.send('statblock', "");
