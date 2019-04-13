@@ -187,13 +187,17 @@ div.edit_buttons_out {
     width: 400px;
     height: 400px;
   }
-  
-  div.calday {
+
+
+  div.othermodal {
+    position: absolute;
     border-style: inset;
     border-width: 3px;
     border-color: #333333;
-    background-color: #dddddd;
-    height: 400px;
+    left: 300px;
+    top: 50px;
     width: 400px;
-    overflow-y: scroll;
+    height: 400px;
+    overflow: hidden;
+    background-color: silver;
   }

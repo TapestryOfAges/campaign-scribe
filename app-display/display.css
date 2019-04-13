@@ -7,13 +7,13 @@
 	display: none;
 }
 
-div.highlight {
-  float: right;
-}
-
 div.musicbox { position: absolute; bottom: 0px ; left:0px; height: 10%; width: 100%}
 
 .statuseffect {
   height: 48px;
   width: 48px;
+}
+
+div.displayinit {
+  overflow-y: scroll;
 }
