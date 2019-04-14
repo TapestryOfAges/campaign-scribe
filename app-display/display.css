@@ -7,7 +7,7 @@
 	display: none;
 }
 
-div.musicbox { position: absolute; bottom: 0px ; left:0px; height: 10%; width: 100%}
+div.musicbox { position: absolute; bottom: 0px ; left:0px; height: 10%;}
 
 .statuseffect {
   height: 48px;

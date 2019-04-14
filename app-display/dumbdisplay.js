@@ -46,5 +46,5 @@ ipcRenderer.on('statblock', function(event, stats) {
 });
 
 ipcRenderer.on('musicbox', function(event, songdesc) {
-  document.getElementById('musicbox').innerHTML = songdesc;
+  document.getElementById('musicbox').innerHTML = `<p style='background-color:silver'>&nbsp;${songdesc}&nbsp;</p>`;
 });

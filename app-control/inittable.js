@@ -171,9 +171,9 @@ function add_to_bottom(person) {
 function makeTable() {
 	let table = "<table id='inittable' class='inittable' border='1' cellspacing='1' cellpadding='0'><tr class='headrow'>";
 	table = table + "<th></th><th></th><th>Init</th><th>Combatant</th><th class='headonly'></th><th>Status</th><th class='headonly'>Kill</th><th></th>";
-	table = table + "</tr>";
+	table = table + "</tr>\n";
 	for (let i=0; i < display.length; i++) {
-		table = table + display[i];
+		table = table + display[i] + "\n";
 	}
 	table = table + "</table>";
 	return table;
@@ -255,11 +255,14 @@ function tmpfunc(e) {
 
 function drawTempButtons(person, index, val) {
 	let rowid = person + "_" + index + "_rowbuttons";
-	if (val) {
-		document.getElementById(rowid).innerHTML = "<img src='../buttons/green-delay.gif' onclick='changestate(\"" + person + "\", \"" + index + "\", \"delay\")' /> &nbsp; <img src='../buttons/green-ready.gif' onclick='changestate(\"" + person + "\", \"" + index + "\", \"ready\")' />";
-	}
-	else {
-		document.getElementById(rowid).innerHTML = "";
+	if (document.getElementById(rowid))
+  {	
+		if (val) {
+			document.getElementById(rowid).innerHTML = "<img src='../buttons/green-delay.gif' onclick='changestate(\"" + person + "\", \"" + index + "\", \"delay\")' /> &nbsp; <img src='../buttons/green-ready.gif' onclick='changestate(\"" + person + "\", \"" + index + "\", \"ready\")' />";
+		}
+	  else {
+			document.getElementById(rowid).innerHTML = "";
+		}
 	}
 }
 	
@@ -277,15 +280,19 @@ function drawTable() {
 	}	
 	for (let i=0;i < combatants.length; i++) {
 		if ((state === "combat") && (i !== current_turn)) {
-      let rowid = combatants[i].name + "_" + combatants[i].index + "_rowbuttons";
-			document.getElementById(rowid).addEventListener("mouseenter", tmpfunc);
-			document.getElementById(rowid).addEventListener("mouseleave", tmpfunc);
+			let rowid = combatants[i].name + "_" + combatants[i].index + "_rowbuttons";
+			if (document.getElementById(rowid)) {
+  			document.getElementById(rowid).addEventListener("mouseenter", tmpfunc);
+				document.getElementById(rowid).addEventListener("mouseleave", tmpfunc);
+			}
 		}
 		if (state === "combat") {
 			if ((combatants[i].goneyet === 0) && (combatants[i].align !== "friendly")) {
 				let rowid = combatants[i].name + "_" + combatants[i].index + "_row";
 //				document.getElementById(rowid).style.display = "none";
-        document.getElementById(rowid).classList.add("notyet");
+        if (document.getElementById(rowid)) {
+					document.getElementById(rowid).classList.add("notyet");
+				}
 			}
 		}
 		if (myprefs.boldtext === 1) {
