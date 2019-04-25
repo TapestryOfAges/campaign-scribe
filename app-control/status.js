@@ -56,6 +56,7 @@ spells["Feather Fall"] = new condition("../statuseffects/featherfall.png", "Fall
 spells["Frostbite"] = new condition("../statuseffects/frostbite.png", "Disadv on next wpn atk before end of next turn.");
 spells["Guidance"] = new condition("../statuseffects/guidance.png", "May add 1d4 to one AbChk.");
 spells["Haste"] = new condition("../statuseffects/guidance.png", "Speed x2, +2 AC, Adv Dex saves, +1 Action.");
+spells["Hex"] = new condition("../statuseffects/hex.png", "Caster has +1d6 necro dmg when hits. Disadv on chosen ability checks.");
 spells["Heroism"] = new condition("../statuseffects/heroism.png", "Immune to Frightened. Gains MOD tmp hp at start of each turn.");
 spells["Levitate"] = new condition("../statuseffects/levitate.png", "Floats.");
 spells["Maximilian's Earthen Grasp"] = new condition("../statuseffects/maximilian's_earthen_grasp.png", "Restrained. (Speed 0. Atks have Disadv. Atks targetting have Adv. Disadv on Dex saves.)");
