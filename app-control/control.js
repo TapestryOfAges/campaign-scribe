@@ -186,7 +186,7 @@ function save_campaign() {
     campaign.spellsmask = spellsmask;
     campaign.notes = notes;
     campaign.calendar = calendar;
-    if (state === "combat") { 
+    if (combatants.length) { 
       campaign.combatants = combatants;
       campaign.display = display;
       campaign.nameshash = nameshash;
