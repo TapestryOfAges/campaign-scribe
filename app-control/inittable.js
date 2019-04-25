@@ -37,6 +37,7 @@ function add_char(char) {
 		}
 	}
 	char.index = 1;
+	char.goneyet = 0;
 	char.initmod = parseInt(char.initmod);
 	set_index(char);
 	if (!char.displayname) { char.displayname = char.name; }
@@ -50,9 +51,6 @@ function add_char(char) {
 
 function toggle_display_combat() {
 	if (state === "combat") {
-    for (let i=0;i < combatants.length; i++) {
-      combatants[i].goneyet = 0;
-    }
 		drawTable();
     document.getElementById('initiative').style.display = "none";
 	}

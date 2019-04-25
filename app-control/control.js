@@ -155,6 +155,13 @@ function load_campaign() {
       }
       showyear = calendar.currentYear;
       showmonth = calendar.currentMonth;
+      if (dataset.hasOwnProperty("combatants")) {
+        combatants = dataset.combatants;
+        display = dataset.display; 
+        nameshash = dataset.nameshash;
+        current_turn = dataset.current_turn;
+        round = dataset.round;
+      }
     });
 
     show_campaign_buttons();
@@ -179,6 +186,13 @@ function save_campaign() {
     campaign.spellsmask = spellsmask;
     campaign.notes = notes;
     campaign.calendar = calendar;
+    if (state === "combat") { 
+      campaign.combatants = combatants;
+      campaign.display = display;
+      campaign.nameshash = nameshash;
+      campaign.current_turn = current_turn;
+      campaign.round = round;
+    }
     fs.writeFile(filename,JSON.stringify(campaign),'utf8', function() {});
   });
 }
