@@ -54,6 +54,8 @@ function Entity() {
   this.setinit = 0;
   this.armorclass = 0;
   this.hitpoints = 0;
+  this.atkbonus = 0;
+  this.dmgdice = "1d1";
 }
 
 Entity.prototype.clone = function(cloneme) {
@@ -67,6 +69,8 @@ Entity.prototype.clone = function(cloneme) {
   this.goneyet = cloneme.goneyet;
   this.armorclass = cloneme.armorclass;
   this.hitpoints = cloneme.hitpoints;
+  this.atkbonus = cloneme.atkbonus;
+  this.dmgdice = cloneme.dmgdice;
 }
 
 let menulock=0;
