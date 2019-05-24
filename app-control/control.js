@@ -55,7 +55,7 @@ function Entity() {
   this.armorclass = 0;
   this.hitpoints = 0;
   this.atkmod = 0;
-  this.dmgdice = 0;
+  this.dmgdice = "1d1";
 }
 
 Entity.prototype.clone = function(cloneme) {

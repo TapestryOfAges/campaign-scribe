@@ -32,8 +32,10 @@ function add_char(char) {
   }
 
 	if (char.hasOwnProperty("hitpoints")) {
-  	if (char.hitpoints.indexOf("d") !== -1) {
-			char.hitpoints = Dice.roll(char.hitpoints);
+		if (typeof char.hitpoints === "String") {
+    	if (char.hitpoints.indexOf("d") !== -1) {
+	  		char.hitpoints = Dice.roll(char.hitpoints);
+			}
 		}
 	}
 	char.index = 1;
