@@ -54,6 +54,8 @@ function Entity() {
   this.setinit = 0;
   this.armorclass = 0;
   this.hitpoints = 0;
+  this.atkmod = 0;
+  this.dmgdice = 0;
 }
 
 Entity.prototype.clone = function(cloneme) {
@@ -67,6 +69,8 @@ Entity.prototype.clone = function(cloneme) {
   this.goneyet = cloneme.goneyet;
   this.armorclass = cloneme.armorclass;
   this.hitpoints = cloneme.hitpoints;
+  this.atkmod = cloneme.atkmod;
+  this.dmgdice = cloneme.dmgdice;
 }
 
 let menulock=0;
@@ -306,6 +310,7 @@ function fade_out_buttons(callbacks) {
 }
 
 function prepare_combat() {
+  if (state === "combat") { ack_keyboard = 1; }
   let combatbuttons = document.getElementById('combat_buttons_group');
   if (menustate === "combat") {
     combatbuttons.classList.remove("combatfadein");
@@ -320,6 +325,7 @@ function prepare_combat() {
 }
 
 function run_campaign() {
+  if (state === "combat") { ack_keyboard = 1; }
   if (!menulock) {
     menulock = 1;
     state = "peace";
@@ -340,6 +346,7 @@ function run_campaign() {
 }
 
 function edit_campaign() { 
+  if (state === "combat") { ack_keyboard = 1; }
   if (!menulock) {
     menulock = 1;
     if (menustate !== "edit") {
@@ -546,6 +553,7 @@ function add_combat_buttons() {
 
 // WORKING HERE- change playlist choice here and in location edit to a dropdown of existing playlists
 function change_playlist() {
+  if (state === "combat") { ack_keyboard = 1; }
 //  document.getElementById('controlwindow').innerHTML = "<input type='text' size=20 name='newlist' id='newlist' /> <input type='button' value='submit' onClick='change_playlist_to()' /> <input type='button' value='cancel' onClick='reset_control_window()' />";
   let buckets = Object.keys(soundtrack);
   buckets.sort();
@@ -569,6 +577,7 @@ function change_playlist_to(newlist) {
 }
 
 function toggle_next_combat() {
+  if (state === "combat") { ack_keyboard = 1; }
   if (combattype === "Combat") { 
     combattype = "Boss Fight"; 
     document.getElementById('next_combat').src = '../ui/combat_next_boss.png';
@@ -640,6 +649,8 @@ function add_combatant() {
   <br />
   Armor class: <input type='text' name='com_ac' size='2' /><br />
   Hit points: <input type='text' name='com_hp' size='2' /><br />
+  Atk Mod: <input type='text' name='com_atk' size='2' /><br />
+  Dmg Dice: <input type='text' name='com_dmg' size='2' /><br />
   Icon: <img src='../icons/Other/NecromancerIcons_02_b.png' width='32' height='32' id='com_icon_pic' onClick='submitAddManual("icon");' /><br />
   Number to add: <input type='text' name='com_addnum' size='2' />
   <input type='hidden' value='Other/NecromancerIcons_02_b.png' name='com_icon' /></p>
@@ -1142,6 +1153,7 @@ function change_background() {
     fileName = fileName.replace(/\\/g,"/");
     ipcRenderer.send('change_bg', fileName);
   }); 
+  if (state === "combat") { ack_keyboard = 1; }
 }
 
 function change_location_txt() {
@@ -1160,6 +1172,7 @@ function send_change_loc_txt() {
 }
 
 function change_location() {
+  if (state === "combat") { ack_keyboard = 1; }
   let tmphold = "<form name='changeloc' id='changeloc'><select name='newloc' id='newloc'>";
   let loclist = Object.keys(locations);
   for (let i=0;i<loclist.length;i++) {
