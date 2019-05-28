@@ -94,7 +94,7 @@ function unlockmenu() { menulock=0; }
 
 
 function Prefs() {
-	this.showtiebreaker = 0;
+	this.showtiebreaker = 1;
 	this.pcswinties = 0;
 	this.boldtext = 0;
 	this.deathsound = 1;
@@ -753,6 +753,8 @@ function submitAddManual(which) {
     newguy.init = the_form.com_init.value;
     if (the_form.com_ac.value) { newguy.armorclass = the_form.com_ac.value; }
     if (the_form.com_hp.value) { newguy.hitpoints = the_form.com_hp.value; }
+    if (the_form.com_atk.value) { newguy.atkmod = the_form.com_atk.value; }
+    if (the_form.com_dmg.value) { newguy.dmgdice = the_form.com_dmg.value; }
     if (the_form.com_icon.value) {
       newguy.icon = the_form.com_icon.value;
     }
@@ -881,7 +883,7 @@ function editGroup2(groupname) {
   let newscreen = "";
   newscreen += "<form name='groupform' id='groupform'><img src='../icons/"+tempeditgroup.icon+"' width='32' height='32' id='groupicon' /> <b>"+currently_editing+"</b><br />";
   newscreen += "<table id='grouptable' cellspacing='1' cellpadding='1' border='1'>";
-  newscreen += "<tr><th></th><th>Name</th><th>Initmod</th><th>AC</th><th>HP</th><th>Align</th><th></th></tr>";
+  newscreen += "<tr><th></th><th>Name</th><th>Initmod</th><th>AC</th><th>HP</th><th>Align</th><th>Atk/Dmg</th><th></th></tr>";
   for (let i=0;i<tempeditgroup.data.length;i++) {
     newscreen += "<tr><td><img src='../icons/" + tempeditgroup.data[i].icon + "' width='16' height='16' /></td>";
     newscreen += "<td>" + tempeditgroup.data[i].name + "</td>";
@@ -889,6 +891,7 @@ function editGroup2(groupname) {
     newscreen += "<td>" + tempeditgroup.data[i].armorclass + "</td>";
     newscreen += "<td>" + tempeditgroup.data[i].hitpoints + "</td>";
     newscreen += "<td>" + tempeditgroup.data[i].align + "</td>";
+    newscreen += "<td>" + tempeditgroup.data[i].atkmod + " " + tempeditgroup.data[i].dmgdice + "</td>";
     newscreen += "<td><input type='button' value='Edit' onClick='editGroupMember(" +i+ ",\""+ groupname + "\")' /> <input type='button' value='Delete' onClick='deleteGroupMember(" +i+ ",\""+ groupname + "\")' /></td></tr>";
   }
   newscreen += "</table><input type='button' value='Add Group Member' onClick='editGroupMember(-1,\""+groupname+"\")' /><input type='button' value='Save Group' onClick='saveGroup()' /><input type='button' value='Cancel' onClick='cancelSaveGroup()' /></form>";
@@ -915,6 +918,8 @@ function editGroupMember(which) {
   let ealign = "enemy";
   let eac = 0;
   let ehp = 0;
+  let eatk = "0";
+  let edmg = "1d1";
   if (which > -1) { 
     icon = tempeditgroup.data[which].icon; 
     ename = tempeditgroup.data[which].name;
@@ -922,6 +927,8 @@ function editGroupMember(which) {
     ealign = tempeditgroup.data[which].align;
     eac = tempeditgroup.data[which].armorclass;
     ehp = tempeditgroup.data[which].hitpoints;
+    eatk = tempeditgroup.data[which].atkmod;
+    edmg = tempeditgroup.data[which].dmgdice;
   }
   let newscreen = "<form id='groupentity'><img src='../icons/"+icon+"' width='32' height='32' id='entityicon' /><br />";
   newscreen += "<table cellpadding='0' cellspacing='2' border='0'><tr><td style='vertical-align:top'>";
@@ -929,6 +936,8 @@ function editGroupMember(which) {
   newscreen += "Init Mod: <img src='../buttons/Square-Button-Minus.png' onclick='modEditMod(-1)' width='32' height='32' /> <input name='forminit' id='forminit' type='text' size='2' value='"+einitmod+"' /> <img src='../buttons/Square-Button-Plus.png' onclick='modEditMod(1)' width='32' height='32' /><br />";
   newscreen += "Armor Class: <input name='formac' type='text' size='2' value='"+eac+"' /><br />";
   newscreen += "Hit Points: <input name='formhp' type='text' size='2' value='"+ehp+"' /><br />";
+  newscreen += "Attack Mod: <input name='formatk' type='text' size='2' value='"+eatk+"' /><br />";
+  newscreen += "Damage Dice: <input name='formdmg' type='text' size='2' value='"+edmg+"' /><br />";
   newscreen += "Align: <select name='formalign'>";
   if (ealign === "friendly") { newscreen += "<option value='friendly' selected='selected'>Friendly</option>"; }
   else { newscreen += "<option value='friendly'>Friendly</option>"; }
@@ -971,6 +980,8 @@ function submitGroupMember(which) {
     newmember.align = theform.formalign.value;
     newmember.armorclass = theform.formac.value;
     newmember.hitpoints = theform.formhp.value;
+    newmember.atkmod = theform.formatk.value;
+    newmember.dmgdice = theform.formdmg.value;
     if (which === -1) {
       tempeditgroup.data.push(newmember);
     } else {

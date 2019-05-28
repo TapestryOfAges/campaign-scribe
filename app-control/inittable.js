@@ -123,7 +123,7 @@ function make_row(person) {
 	row = row + "<td class='turnmarker' id='" + person.name + "_" + person.index + "_turnmarker' width='32'>" + r_d_icon + "</td>";
 	row = row + "<td class='rowicon' id='" + person.name + "_" + person.index + "_rowicon'><img src='../icons/" + person.icon + "' width='32' height='32'/ ></td>";
 	row = row + `<td class='rowinit_${person.align}' id='${person.name}_${person.index}_rowinit'><span id='${person.name}_${person.index}_rowinitval' ondblclick="getInput('${person.name}', '${person.index}', 'initval')">${person.init}</span> <span id='${person.name}_${person.index}_rowinitmod' ondblclick="getInput('${person.name}', '${person.index}', 'initmod')">(${person.initmod})</span>`;
-	if (myprefs.showtiebreaker === 1) { row = row + " [" + person.tiebreaker + "]"; }
+	if (myprefs.showtiebreaker === 1) { row = row + " <span class='headonly'>[" + person.tiebreaker + "]</span>"; }
 	row = row + "</td>";
 	
 	let ind = "";
@@ -139,6 +139,10 @@ function make_row(person) {
 	stat1 += `</span></td><td ondblclick='getInput("${person.name}", "${person.index}","hp")' style='vertical-align:middle'><img src='../ui/hp.png' height='30' /><span id='${person.name}_${person.index}_rowhp'>`;
 	if (person.hitpoints) {
 		stat1 += person.hitpoints;
+	}
+	stat1 += `</span></td><td ondblclick='getInput("${person.name}", "${person.index}","atk")' style='vertical-align:middle'><img src='../ui/atk.jpg' height='30' /><span id='${person.name}_${person.index}_rowatk'>`;
+	if (person.atkmod) {
+		stat1 += person.atkmod + ", " + person.dmgdice;
 	}
 	stat1 += `</span></td></tr></table>`;
 
@@ -180,7 +184,11 @@ function makeTable() {
 }
 
 function getInput(name,index,inputtype) {
-  let dude = findEntityByName(name, index);
+	let dude = findEntityByName(name, index);
+	if (inputtype === "atk") {
+		MakeAttack(dude);
+		return;
+	}
   let input = document.getElementById(name + "_" + index + "_row" + inputtype);
   let currdata = input.innerHTML;
   let size=8;
@@ -190,6 +198,26 @@ function getInput(name,index,inputtype) {
 	document.getElementById(`tmp_${inputtype}`).focus();
 	document.getElementById(`tmp_${inputtype}`).select();
 	ack_keyboard = 0;
+}
+
+function MakeAttack(who) {
+	console.log(who);
+	let attacks = who.atkmod.split("/");
+	let damages = who.dmgdice.split("/");
+	console.log(attacks);
+	console.log(damages); 
+
+	let results = "";
+	for (let i=0;i<attacks.length;i++) { 
+		if (i > 0) { results += "<br />"; }
+		let atkroll = Dice.roll("1d20"+attacks[i]);
+		let dmgroll = Dice.roll(damages[i]);
+		results += `Roll: ${atkroll}, Dmg: ${dmgroll}`;
+
+		document.getElementById('othermod').style.display = "block";
+		window.addEventListener('click', WindowOnclickGeneric);
+		document.getElementById('othermodcontent').innerHTML = `<div style="border=1">${results}</div>`;
+	}
 }
 
 function ProcessChangeInput(name,index,inputtype) {
