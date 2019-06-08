@@ -59,7 +59,8 @@ function Entity() {
 }
 
 Entity.prototype.clone = function(cloneme) {
-	this.initmod = cloneme.initmod;
+  this.initmod = cloneme.initmod;
+  this.init = cloneme.init;
 	this.align = cloneme.align;
 	this.icon = cloneme.icon;
 	this.name = cloneme.name;

@@ -7,6 +7,7 @@ let current_turn = 0;
 let round=1;
 
 function add_char(char) {
+	console.log(char);
   if (char.init === "roll") {
     char.init = Math.floor(Math.random()*20)+1  + char.initmod;
     char.setinit = 1;
