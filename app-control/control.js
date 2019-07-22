@@ -228,7 +228,6 @@ function show_campaign_buttons(callbacks) {
     </div>
     <img src='../ui/agone-Notes.png' width='50' class='notepad' onClick='ShowNotes();' />
     <img src='../ui/hawk88-Calendar-1.png' width='50' class='calendar' onClick='ShowCalendar()' /><br />
-    <img src='../ui/speaker.png' width='50' class='speaker' onClick='RunSoundboard();' />
 
     `;
     menustate = "start";
