@@ -33,6 +33,7 @@ let explosion = new Audio("../sounds/exp05.mp3");
 let tmpbackground = "";
 let selectedentity;
 let notes = "";
+let soundboard = {};
 
 // editing
 let currently_editing = "";
@@ -226,7 +227,9 @@ function show_campaign_buttons(callbacks) {
     <img src='../ui/combat_begin_combat.png' onClick='toggle_combat()' />
     </div>
     <img src='../ui/agone-Notes.png' width='50' class='notepad' onClick='ShowNotes();' />
-    <img src='../ui/hawk88-Calendar-1.png' width='50' class='calendar' onClick='ShowCalendar()' />
+    <img src='../ui/hawk88-Calendar-1.png' width='50' class='calendar' onClick='ShowCalendar()' /><br />
+    <img src='../ui/speaker.png' width='50' class='speaker' onClick='RunSoundboard();' />
+
     `;
     menustate = "start";
     if (callbacks && callbacks.length) { 
