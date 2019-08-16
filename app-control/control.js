@@ -1009,7 +1009,9 @@ function cancelSaveGroup() {
 function submitAddCombatant(groupname) {
   Create_Combat_Pane();
   for (let i=0;i<preset_groups[groupname].data.length;i++) {
-    add_char(preset_groups[groupname].data[i].clone());
+    let tmpchar = new Entity;
+    tmpchar.clone(preset_groups[groupname].data[i]);
+    add_char(tmpchar);
   }
   add_combatant();
   update_display();

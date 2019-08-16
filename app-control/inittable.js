@@ -33,7 +33,7 @@ function add_char(char) {
   }
 
 	if (char.hasOwnProperty("hitpoints")) {
-		if (typeof char.hitpoints === "String") {
+		if (typeof char.hitpoints === "string") {
     	if (char.hitpoints.indexOf("d") !== -1) {
 	  		char.hitpoints = Dice.roll(char.hitpoints);
 			}
