@@ -652,6 +652,7 @@ function add_combatant() {
   <br />
   Armor class: <input type='text' name='com_ac' size='2' /><br />
   Hit points: <input type='text' name='com_hp' size='2' /><br />
+  (Separate by slashes:)
   Atk Mod: <input type='text' name='com_atk' size='2' /><br />
   Dmg Dice: <input type='text' name='com_dmg' size='2' /><br />
   Icon: <img src='../icons/Other/NecromancerIcons_02_b.png' width='32' height='32' id='com_icon_pic' onClick='submitAddManual("icon");' /><br />
