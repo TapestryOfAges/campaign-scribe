@@ -211,14 +211,21 @@ function MakeAttack(who) {
 	let results = "";
 	for (let i=0;i<attacks.length;i++) { 
 		if (i > 0) { results += "<br />"; }
-		let atkroll = Dice.roll("1d20"+attacks[i]);
+		let atkdie = Dice.roll("1d20");
+		let atkroll = atkdie + parseInt(attacks[i]);
 		let dmgroll = Dice.roll(damages[i]);
-		results += `Roll: ${atkroll}, Dmg: ${dmgroll}`;
+		let crit = "";
+		if (atkdie === 20) {
+			crit = "<span style='color:red'>CRIT!</span>";
+			let dmgdie = damages[i].split('+');
+			dmgroll += Dice.roll(dmgdie[0]);
+		}
+		results += `Roll: ${atkroll} ${crit}, Dmg: ${dmgroll}<br />`;
 
-		document.getElementById('othermod').style.display = "block";
-		window.addEventListener('click', WindowOnclickGeneric);
-		document.getElementById('othermodcontent').innerHTML = `<div style="border=1">${results}</div>`;
 	}
+	document.getElementById('othermod').style.display = "block";
+	window.addEventListener('click', WindowOnclickGeneric);
+	document.getElementById('othermodcontent').innerHTML = `<div style="border=1">${results}</div>`;
 }
 
 function ProcessChangeInput(name,index,inputtype) {
