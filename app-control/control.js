@@ -213,7 +213,9 @@ function show_campaign_buttons(callbacks) {
     <div id='edit_buttons_group' class='edit_buttons_start'><img src='../ui/edit_locations.png' style='position:relative; top: 0px;' onclick='edit_locations()' />
   <img src='../ui/edit_preset_groups.png' style='position:relative; top: 0px;' onclick='edit_presets()' />
   <img src='../ui/edit_status.png' style='position:relative; top: 0px;' onclick='EditStatusLists()' />
-  <img src='../ui/edit_soundtrack.png' style='position:relative; top: 0px;' onclick='edit_soundtrack()' /></div>
+  <img src='../ui/edit_soundtrack.png' style='position:relative; top: 0px;' onclick='edit_soundtrack()' />
+  <img src='../ui/create_weather.png' style="position:relative; top: 0px;' onclick="create_weather()' />
+  </div>
     <div id='run_buttons_group' class='edit_buttons_start'><img src='../ui/change_location.png' onclick='change_location()' />
     <img src='../ui/change_background.png' onClick='change_background()' />
     <img src='../ui/change_soundtrack.png' onClick='change_playlist()' />

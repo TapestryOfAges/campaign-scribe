@@ -1,5 +1,11 @@
 "use strict;"
 
+function create_weather() {
+  document.getElementById('controlwindow').innerHTML = `<div id='weatherpane'></div><div id='weathercontrol'></div>`;
+  ShowWeatherPatterns();
+  CreateWeathervane();
+}
+
 function ShowWeatherPatterns() {
   let table = `<h3 style='text-align:center'>Weather Determination (Dragon Magazine #137, pg 36)</h3>
   <table cellpadding='0' cellspacing='3' border='0' style='font-size:small'>
