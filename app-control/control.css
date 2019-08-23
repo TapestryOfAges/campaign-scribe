@@ -73,13 +73,13 @@ div.control-menu { position: absolute; left: 0px; width: 25%; top: 10%; height: 
  }
 
   @keyframes collapsebuttons {
-    from {top: 162px;}
+    from {top: 192px;}
     to {top:42px; }
   }
 
  @keyframes separatebuttons {
     from { top: 42px; }
-    to { top: 162px; }
+    to { top: 192px; }
  }
 
  img.bottombutton { 

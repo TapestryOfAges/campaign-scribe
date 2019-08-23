@@ -1,6 +1,7 @@
 "use strict;"
 
 function create_weather() {
+  console.log("in create weather");
   document.getElementById('controlwindow').innerHTML = `<div id='weatherpane'></div><div id='weathercontrol'></div>`;
   ShowWeatherPatterns();
   CreateWeathervane();
@@ -27,12 +28,12 @@ function ShowWeatherPatterns() {
   <tr><td></td><td>Coastal</td><td>51-70&deg;</td><td>Cool with dry winter</td></tr>
   <tr><td></td><td>All</td><td>71-90&deg;</td><td>-</td></tr>
   <tr><td>Grassland</td><td>All</td><td>0-20&deg;</td><td>Tropical savanna</td></tr>
-  <tr><td>(also Clear)</td><td>Inland</td><td>21-50&amp;</td><td>Steppe</td></tr>
-  <tr><td></td><td>Inland</td><td>51-70&amp;</td><td>Cool &amp; rainy</td></tr>
-  <tr><td></td><td>Coastal</td><td>21-50&amp;</td><td>Warm &amp; rainy, or warm with dry summer</td></tr>
-  <tr><td></td><td>Coastal</td><td>51-70&amp;</td><td>Cool with dry winter</td></tr>
-  <tr><td></td><td>All</td><td>71-90&amp;</td><td>Tundra, or polar</td></tr>
-  <tr><td>Hills</td><td>Inland</td><td>0-20&amp;</td><td>Tropical savanna</td></tr>
+  <tr><td>(also Clear)</td><td>Inland</td><td>21-50&deg;</td><td>Steppe</td></tr>
+  <tr><td></td><td>Inland</td><td>51-70&deg;</td><td>Cool &amp; rainy</td></tr>
+  <tr><td></td><td>Coastal</td><td>21-50&deg;</td><td>Warm &amp; rainy, or warm with dry summer</td></tr>
+  <tr><td></td><td>Coastal</td><td>51-70&deg;</td><td>Cool with dry winter</td></tr>
+  <tr><td></td><td>All</td><td>71-90&deg;</td><td>Tundra, or polar</td></tr>
+  <tr><td>Hills</td><td>Inland</td><td>0-20&deg;</td><td>Tropical savanna</td></tr>
   <tr><td></td><td>Inland</td><td>21-40&deg;</td><td>Warm with dry winter</td></tr>
   <tr><td></td><td>Inland</td><td>41-70&deg;</td><td>Cool &amp; rainy</td></tr>
   <tr><td></td><td>Inland</td><td>71-90&deg;</td><td>Polar</td></tr>
@@ -90,10 +91,27 @@ function CreateWeathervane() {
     <option value=11>November</option>
     <option value=12>December</option>
     </select><br />
-    <input type="button" onclick="CreateWeather()" /></p>`;
+    <input type="button" value="Generate Weather (Day)" onclick="GenWeather()" /> <input type="button" value="Generate Weather (Month)" onclick="GenWeather('month')" /></p>`;
 
   document.getElementById('weathercontrol').innerHTML = html;
 } 
+
+function GenWeather(dur) {  
+  if (!dur) {
+    // one day
+    let weather = CreateWeather();
+    console.log(weather);
+    if (weather.rain) {
+      let raintype = Dice.roll("1d6");
+      if (raintype === 1) {
+        let fog = Dice.roll("1d10");
+        let fogdesc = "";
+        if (fog === 1) { fogdesc = "(Fog if temp greater than 32&deg;)"; }
+        weather.raindesc = `Light mist ${fogdesc}/Few flakes`;
+      }
+    }
+  }
+}
 
 function CreateWeather() {
   let climatesel = document.getElementById('climateselect');
@@ -561,5 +579,5 @@ function CreateWeather() {
     return;
   }
 
-  
+  return {mintemp: mintemp, maxtemp: maxtemp, rain: rain};
 }
