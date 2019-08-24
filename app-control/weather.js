@@ -76,7 +76,7 @@ function CreateWeathervane() {
     <option value='warm with dry summer'>Warm with Dry Summer</option>
     <option value='warm with dry winter'>Warm with Dry Winter</option>
     </select><br />
-    Hemisphere: <select id='hemisphereselect' name='hemisphereselect'><option value='n'>North</option><option value='s'>South</option></select><br />
+    Hemisphere: <select id='hemisphereselect' name='hemisphereselect'><option value='N'>North</option><option value='S'>South</option></select><br />
     Month-equivalent: <select id="monthselect" name="monthselect">
     <option value=1>January</option>
     <option value=2>February</option>
@@ -101,14 +101,82 @@ function GenWeather(dur) {
     // one day
     let weather = CreateWeather();
     console.log(weather);
+    let windroll = '1d6';
     if (weather.rain) {
-      let raintype = Dice.roll("1d6");
-      if (raintype === 1) {
+      let raintype = Dice.roll("1d12");
+      if ((raintype >= 1) && (raintype <= 2)) {
         let fog = Dice.roll("1d10");
         let fogdesc = "";
         if (fog === 1) { fogdesc = "(Fog if temp greater than 32&deg;)"; }
         weather.raindesc = `Light mist ${fogdesc}/Few flakes`;
+        windroll = "1d4";
+      } else if ((raintype >= 3) && (raintype <= 5)) {
+        let fog = Dice.roll("1d10");
+        let fogdesc = "";
+        if (fog === 1) { fogdesc = "(Fog if temp greater than 32&deg;)"; }
+        weather.raindesc = `Drizzle ${fogdesc}/Dusting`;
+        windroll = "1d6";
+      } else if ((raintype >=6) && (raintype <= 8)) {
+        weather.raindesc = `Steady rainfall/Flurries`;
+        windroll = "2d4";
+      } else if ((raintype >=9) && (raintype <= 10)) {
+        weather.raindesc = `Strong rainfall/Moderate Snowfall`;
+        windroll = "2d6";
+      } else if (raintype === 11) {
+        let roll = Dice.roll("1d100");
+        let thunder = "";
+        if (roll <= 15) { thunder = " (Thunderstorm)"; }
+        weather.raindesc = `Pounding Rain${thunder}/Heavy Snowfall`;
+        windroll = "2d8";
+      } else if (raintype === 12) {
+        let roll = Dice.roll("1d100");
+        let thunder = "";
+        if (roll <= 15) { thunder = " (Thunderstorm)"; }
+        roll = Dice.roll("1d100");
+        let hail = "";
+        if (roll <= 20) { hail = " (Inc hail)"; }
+        weather.raindesc = `Downpour${thunder}/Blizzard${hail}`;
+        windroll = "2d10";
       }
+    }
+    console.log(windroll);
+    let winddesc = GetWind(windroll);    
+    if (!weather.rain) {
+      let roll = Dice.roll("1d12");
+      if (roll <= 3) { weather.raindesc = "Clear skies." }
+      else if ((roll >= 4) && (roll <= 6)) { weather.raindesc = "A few clouds." }
+      else if ((roll >= 7) && (roll <= 8)) { weather.raindesc = "Mostly cloudy." }
+      else if ((roll >= 9) && (roll <= 10)) { weather.raindesc = "Gray, lightly overcast." }
+      else if (roll === 11) { weather.raindesc = "Gray, heavily overcast." }
+      else if (roll === 12) {  
+        weather.raindesc = "Dark storm clouds.";
+        if (Dice.roll("1d10") === 1) { weather.raindesc += " (Some dry lightning.)"; } 
+      }
+    }
+    document.getElementById("weatherpane").innerHTML = `Temperature: ${weather.mintemp} - ${weather.maxtemp}<br />
+                                                        ${weather.raindesc}<br />
+                                                        ${winddesc}`;
+  }
+}
+
+function GetWind(windroll) {
+  windroll = Dice.roll(windroll);
+  if (windroll === 1) { return "Calm (<1 mph- smoke rises vertically)"; }
+  if ((windroll >= 2) && (windroll <= 3)) { return "Light air (1-3 mph- wind direction shown by smoke but not wind vanes)"; }
+  if ((windroll >= 4) && (windroll <= 5)) { return "Light breeze (4-7 mph- wind felt on face, leaves rustles, and ordinary vanes move)"; }
+  if ((windroll >= 6) && (windroll <= 7)) { return "Gentle breeze (8-12 mph- leaves and small twigs sway and banners flap)"; }
+  if ((windroll >= 8) && (windroll <= 9)) { return "Moderate breeze (13-18 mph- small branches move, and dust and small branches are raised)"; }
+  if ((windroll >= 10) && (windroll <= 11)) { return "Fresh breeze (19-24 mph- small trees sway and small waves form on inland waters)"; }
+  if ((windroll >= 12) && (windroll <= 13)) { return "Strong breeze (25-31 mph- large branches move)"; }
+  if ((windroll >= 14) && (windroll <= 15)) { return "Moderate gale (or near gale) (32-38 mph- whole trees sway and walking against wind is an inconvenience)"; }
+  if ((windroll >= 16) && (windroll <= 17)) { return "Fresh gale (or gale) (39-46 mph- twigs break off trees and general progress is impeded)"; }
+  if (windroll === 18) { return "Strong gale (47-54 mph- slight structural damage occurs)"; }
+  if (windroll === 19) { return "Whole gale (or storm) (55-63 mph- trees are uprooted and considerable structural damage occurs)"; }
+  if (windroll === 20) {
+    if (Dice.roll("1d10") <= 8) {
+      return "Storm (or violent storm) (64-72 mph- widespread damage occurs)";
+    } else {
+      return "Hurricane (73-136 mph- widespread devastation occurs)";
     }
   }
 }
@@ -120,6 +188,7 @@ function CreateWeather() {
   let hemi = hemisel[hemisel.selectedIndex].value;
   let monthsel = document.getElementById('monthselect');
   let month = monthsel[monthsel.selectedIndex].value;
+  console.log(`${climate} ${hemi} ${month}`);
 
   let mintemp;
   let maxtemp;
