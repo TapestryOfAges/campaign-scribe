@@ -130,7 +130,6 @@ document.addEventListener("DOMContentLoaded", function(event) {   // replaces $(
     ipcRenderer.send("send_prefs", myprefs);
   }
   
-  SetUpStatuses();
 });
 
 
@@ -168,6 +167,7 @@ function load_campaign() {
         current_turn = dataset.current_turn;
         round = dataset.round;
       }
+      SetUpStatuses();
     });
 
     show_campaign_buttons();
