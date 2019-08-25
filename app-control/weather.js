@@ -91,6 +91,7 @@ function CreateWeathervane() {
     <option value=11>November</option>
     <option value=12>December</option>
     </select><br />
+    <input type="checkbox" name="PotA" id="PotA" /> PotA Elemental Influence<br />
     <input type="button" value="Generate Weather (Day)" onclick="GenWeather()" /> <input type="button" value="Generate Weather (Month)" onclick="GenWeather('month')" /></p>`;
 
   document.getElementById('weathercontrol').innerHTML = html;
@@ -153,9 +154,18 @@ function GenWeather(dur) {
         if (Dice.roll("1d10") === 1) { weather.raindesc += " (Some dry lightning.)"; } 
       }
     }
+    let magic = "";
+    if (document.getElementById("PotA").checked) {
+      if (Dice.roll("1d20") <= 3) {
+        if (Dice.roll("1d2") === 1) { magic += "Unseasonably hot. "; }
+        else { magic = "Unseasonably cold."; }
+      }
+      if (Dice.roll("1d20") <= 3) { magic += "Intense storms. "; }
+      if (Dice.roll("1d20") <= 3) { magic += "Earthquakes."; }
+    }
     document.getElementById("weatherpane").innerHTML = `Temperature: ${weather.mintemp} - ${weather.maxtemp}<br />
                                                         ${weather.raindesc}<br />
-                                                        ${winddesc}`;
+                                                        ${winddesc}<br /><span style='color:red'>${magic}</span>`;
   }
 }
 
