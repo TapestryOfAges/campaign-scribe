@@ -1,5 +1,7 @@
 "use strict";
 
+const Sortable = require("sortablejs");
+
 let combatants = [];
 let display = [];
 let nameshash = [];

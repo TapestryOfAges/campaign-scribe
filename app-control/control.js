@@ -233,6 +233,7 @@ function show_campaign_buttons(callbacks) {
 
     `;
     menustate = "start";
+
     if (callbacks && callbacks.length) { 
       let callback = callbacks.shift(); 
       setTimeout( function() {
