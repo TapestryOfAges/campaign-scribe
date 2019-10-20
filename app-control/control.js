@@ -109,7 +109,12 @@ document.addEventListener("DOMContentLoaded", function(event) {   // replaces $(
 	window.onkeydown = function(e) { // replaces $(window).keydown(function(e) {
 //    console.log(e);
     let code = (e.keyCode ? e.keyCode : e.which);
-		if ((state === "combat") && ack_keyboard)  {
+    let ctrl = e.ctrlKey;
+    if (ctrl && (code === 65)) { 
+      // CTRL-A
+      ack_keyboard = 1;
+    }
+		else if ((state === "combat") && ack_keyboard)  {
       if (code == 32 || code == 78 || code == 110) { nextCombatant(); e.preventDefault(); }
       else if (code == 80 || code == 112) { prevCombatant(); e.preventDefault(); }
       else if (code == 68) { e.preventDefault(); changestate(combatants[current_turn].name, combatants[current_turn].index, "delay"); }
