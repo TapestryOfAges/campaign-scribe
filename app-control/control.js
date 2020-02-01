@@ -163,6 +163,8 @@ function load_campaign() {
       if (dataset.hasOwnProperty("calendar")) {
         calendar = dataset.calendar;
       }
+      calendar.currentYear = parseInt(calendar.currentYear);
+      calendar.currentMonth = parseInt(calendar.currentMonth);
       showyear = calendar.currentYear;
       showmonth = calendar.currentMonth;
       if (dataset.hasOwnProperty("combatants")) {

@@ -4,12 +4,12 @@ const Sortable = require("sortablejs");
 
 let combatants = [];
 let display = [];
-let nameshash = [];
+let nameshash = {};
 let current_turn = 0;
 let round=1;
 
 function add_char(char) {
-	console.log(char);
+//	console.log(char);
   if (char.init === "roll") {
     char.init = Math.floor(Math.random()*20)+1  + char.initmod;
     char.setinit = 1;
@@ -310,7 +310,9 @@ function drawTable() {
 		display[i] = make_row(combatants[i]);
 	}
 	let table = makeTable();
-  document.getElementById('initiative').innerHTML = table;
+	let initttablehtml = document.getElementById('initiative');
+	initttablehtml.offsetTop;
+  initttablehtml.innerHTML = table;
 	if (state === "combat") {
 		let curr_combatant = combatants[current_turn];
 		setCurrentTurn(curr_combatant);
